@@ -43,12 +43,12 @@ class Player(Entity):
         if self.power > self.maxPower:
             self.power = self.maxPower
         if self.isStable:
-            self.rotation = math.degrees(math.atan2(self.world.mousePos[0] - self.x, self.world.mousePos[1] - self.y))
-            self.rotation = Utility.getRelativeRotation(self.stableRotation, self.rotation)
-            if self.rotation > self.stableRotation + self.angleLimit:
-                self.rotation = self.stableRotation + self.angleLimit
-            if self.rotation < self.stableRotation - self.angleLimit:
-                self.rotation = self.stableRotation - self.angleLimit
+            self.arrowRotation = math.degrees(math.atan2(self.world.mousePos[0] - self.x, self.world.mousePos[1] - self.y))
+            self.arrowRotation = Utility.getRelativeRotation(self.stableRotation, self.arrowRotation)
+            if self.arrowRotation > self.stableRotation + self.angleLimit:
+                self.arrowRotation = self.stableRotation + self.angleLimit
+            if self.arrowRotation < self.stableRotation - self.angleLimit:
+                self.arrowRotation = self.stableRotation - self.angleLimit
             if self.world.buttonState[0]:
                 self.sprite = self.world.assetLoader.spaceguyCrouch
                 self.crouching = True
@@ -57,6 +57,7 @@ class Player(Entity):
                     self.crouching = False
                     self.isStable = False
                     self.sprite = self.world.assetLoader.spaceguyJump
+                    self.rotation = self.arrowRotation
                     self.hSpeed = Utility.lengthDirXDegrees(self.power / 2, self.rotation + 90)
                     self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
                     self.jumpTimer = self.jumpTimerMax
@@ -81,11 +82,11 @@ class Player(Entity):
     def drawArrow(self, surface):
         arrowSeg = self.world.assetLoader.arrowSegment
         arrowTip = self.world.assetLoader.arrowTip
-        segLen = arrowSeg.width / 2 - 1
+        segLen = 10
         for i in range(int(self.power)):
-            x = self.x + Utility.lengthDirXDegrees(i * segLen + segLen / 2 + self.sprite.height / 4, self.rotation + 90)
-            y = self.y + Utility.lengthDirYDegrees(i * segLen + segLen / 2 + self.sprite.height / 4, self.rotation + 90)
-            arrowSeg.draw(surface, x, y, 0, self.rotation + 90)
-        x = self.x + Utility.lengthDirXDegrees(self.power * segLen + segLen / 2 + self.sprite.height / 4, self.rotation + 90)
-        y = self.y + Utility.lengthDirYDegrees(self.power * segLen + segLen / 2 + self.sprite.height / 4, self.rotation + 90)
-        arrowTip.draw(surface, x, y, 0, self.rotation)
+            x = self.x + Utility.lengthDirXDegrees(i * segLen + segLen / 2 + self.sprite.height / 4, self.arrowRotation + 90)
+            y = self.y + Utility.lengthDirYDegrees(i * segLen + segLen / 2 + self.sprite.height / 4, self.arrowRotation + 90)
+            arrowSeg.draw(surface, x, y, 0, self.arrowRotation)
+        x = self.x + Utility.lengthDirXDegrees(self.power * segLen + segLen / 2 + self.sprite.height / 4 + 2, self.arrowRotation + 90)
+        y = self.y + Utility.lengthDirYDegrees(self.power * segLen + segLen / 2 + self.sprite.height / 4 + 2, self.arrowRotation + 90)
+        arrowTip.draw(surface, x, y, 0, self.arrowRotation)
