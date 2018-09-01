@@ -1,12 +1,7 @@
-'''
-Created on Aug 31, 2018
-
-@author: Michael
-'''
-
 import pygame
 import Entity
 import Sprite
+import Player
 
 class World(object):
     clock = pygame.time.Clock()
@@ -14,10 +9,11 @@ class World(object):
     entityList = []
     running = True
     mainSurface = None
+    camPos = [0, 0]
 
     def __init__(self, mainSurface):
         self.mainSurface = mainSurface
-        image = Sprite.Sprite(pygame.image.load("WalkingManSpriteSheet-2400px-1024x157.png"), 8)
+        image = Sprite.Sprite(self, pygame.image.load("WalkingManSpriteSheet-2400px-1024x157.png"), 8)
         entity = Entity.Entity(self, image, 100, 100)
         self.addEntity(entity)
 

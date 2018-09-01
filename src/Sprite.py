@@ -1,24 +1,30 @@
-'''
-Created on Aug 31, 2018
-
-@author: micha
-'''
+import pygame
+import math
 
 class Sprite(object):
     frameCount = 1
     animationSpeed = 15
     frameList = []
+    width = 0
+    height = 0
+    world = None
 
-    def __init__(self, spriteSheet, frameCount=1, animationSpeed=15):
+    def __init__(self, world, spriteSheet, frameCount=1, animationSpeed=15):
+        self.world = world
         self.frameCount = frameCount
         self.animationSpeed = animationSpeed
         size = spriteSheet.get_size()
-        frameHeight = size[1]
-        frameWidth = size[0] / frameCount
+        self.height = size[1]
+        self.width = size[0] / frameCount
 
         for frame in range(frameCount):
-            x = frameWidth * frame
-            self.frameList.append(spriteSheet.subsurface(x, 0, frameWidth, frameHeight))
+            x = self.width * frame
+            self.frameList.append(spriteSheet.subsurface(x, 0, self.width, self.height))
 
-    def draw(self, surface, x, y, frame):
-        surface.blit(self.frameList[frame], (x, y))
+    def draw(self, surface, x, y, frame, angle=0):
+        if angle == 0:
+            surface.blit(self.frameList[frame], (x - self.width / 2 - self.world.camPos[0], y - self.height / 2 - self.world.camPos[1]))
+        else:
+            tempSurface = pygame.transform.rotate(self.frameList[frame], angle)
+            tempSize = tempSurface.get_size()
+            surface.blit(tempSurface, (x - tempSize[0] / 2 - self.world.camPos[0], y - tempSize[1] / 2 - self.world.camPos[1]))

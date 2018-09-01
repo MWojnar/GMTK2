@@ -1,9 +1,3 @@
-'''
-Created on Aug 31, 2018
-
-@author: Michael
-'''
-
 import World
 import pygame
 

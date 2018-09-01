@@ -1,9 +1,3 @@
-'''
-Created on Aug 31, 2018
-
-@author: Michael
-'''
-
 class Entity(object):
     sprite = None
     animationSpeedTimer = 0
