@@ -18,14 +18,32 @@ class Player(Entity):
         self.y = y
         self.depth = depth
         self.rotation = 0
+        self.isStable = True
+        self.stableRotation = 0
+        self.angleLimit = 60
         
     def update(self):
         super().update()
         buttonState = pygame.mouse.get_pressed()
         pos = pygame.mouse.get_pos()
         truePos = (pos[0] + self.world.camPos[0], pos[1] + self.world.camPos[1])
-        if buttonState[0]:
-            self.rotation = math.degrees(math.atan2(truePos[0] - self.x, truePos[1] - self.y))
+        if self.isStable:
+            if buttonState[0]:
+                self.rotation = math.degrees(math.atan2(truePos[0] - self.x, truePos[1] - self.y))
+                self.rotation = self.getRelativeRotation(self.stableRotation, self.rotation)
+                if self.rotation > self.stableRotation + self.angleLimit:
+                    self.rotation = self.stableRotation + self.angleLimit
+                if self.rotation < self.stableRotation - self.angleLimit:
+                    self.rotation = self.stableRotation - self.angleLimit
+            else:
+                self.rotation = self.stableRotation
+                
+    def getRelativeRotation(self, centerRotation, targetRotation):
+        while targetRotation < centerRotation - 180:
+            targetRotation += 360
+        while targetRotation > centerRotation + 180:
+            targetRotation -= 360
+        return targetRotation
         
     def draw(self, surface):
         self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
