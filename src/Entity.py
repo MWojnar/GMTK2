@@ -1,3 +1,4 @@
+import Utility
 class Entity(object):
     def __init__(self, world=None, x=0, y=0, sprite=None, depth=0):
         self.frame = 0
@@ -9,6 +10,10 @@ class Entity(object):
         self.depth = depth
         self.rotation = 0
         self.animating = True
+        self.isRectMask = False
+        self.circleMaskRadius = 0
+        self.circleMaskCenter = (0, 0)
+        self.rectMask = (0, 0, 0, 0)
         
     def update(self):
         if self.animating:
@@ -26,6 +31,26 @@ class Entity(object):
             if self.frame >= self.sprite.frameCount:
                 self.frame = 0
                 self.animationEnd()
+                
+    def isColliding(self, entity):
+        if not self.isRectMask and not entity.isRectMask:
+            return (Utility.getDistance((self.x + self.circleMaskCenter[0], self.y + self.circleMaskCenter[1]),
+                                       (entity.x + entity.circleMaskCenter[0], entity.y + entity.circleMaskCenter[1])) <
+                                       self.circleMaskRadius + entity.circleMaskRadius)
+        elif self.isRectMask and entity.isRectMask:
+            rect1 = (self.x + self.rectMask[0], self.y + self.rectMask[1], self.x + self.rectMask[0] + self.rectMask[2], self.y + self.rectMask[1] + self.rectMask[3])
+            rect2 = (entity.x + entity.rectMask[0], entity.y + entity.rectMask[1], entity.x + entity.rectMask[0] + entity.rectMask[2], entity.y + entity.rectMask[1] + entity.rectMask[3])
+            return Utility.rectsColliding(rect1, rect2)
+        else:
+            rect = []
+            circle = []
+            if self.isRectMask and not entity.isRectMask:
+                rect = (self.x + self.rectMask[0], self.y + self.rectMask[1], self.x + self.rectMask[0] + self.rectMask[2], self.y + self.rectMask[1] + self.rectMask[3])
+                circle = ((entity.x + entity.circleMaskCenter[0], entity.y + entity.circleMaskCenter[1]), entity.circleMaskRadius)
+            else:
+                rect = (entity.x + entity.rectMask[0], entity.y + entity.rectMask[1], entity.x + entity.rectMask[0] + entity.rectMask[2], entity.y + entity.rectMask[1] + entity.rectMask[3])
+                circle = ((self.x + self.circleMaskCenter[0], self.y + self.circleMaskCenter[1]), self.circleMaskRadius)
+            Utility.rectCircleColliding(rect, circle)
     
     def animationEnd(self):
         pass
