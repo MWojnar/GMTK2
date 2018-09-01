@@ -5,6 +5,7 @@ Created on Aug 31, 2018
 '''
 import pygame
 import math
+import Utility
 from Entity import Entity
 
 class Player(Entity):
@@ -32,9 +33,10 @@ class Player(Entity):
         buttonState = pygame.mouse.get_pressed()
         pos = pygame.mouse.get_pos()
         truePos = (pos[0] + self.world.camPos[0], pos[1] + self.world.camPos[1])
+        dist = Utility.getDistance((self.x, self.y), truePos)
         if self.isStable:
             self.rotation = math.degrees(math.atan2(truePos[0] - self.x, truePos[1] - self.y))
-            self.rotation = self.getRelativeRotation(self.stableRotation, self.rotation)
+            self.rotation = Utility.getRelativeRotation(self.stableRotation, self.rotation)
             if self.rotation > self.stableRotation + self.angleLimit:
                 self.rotation = self.stableRotation + self.angleLimit
             if self.rotation < self.stableRotation - self.angleLimit:
@@ -43,13 +45,6 @@ class Player(Entity):
                 self.sprite = self.world.assetLoader.spaceguyCrouch
             else:
                 self.sprite = self.world.assetLoader.spaceguyStand
-                
-    def getRelativeRotation(self, centerRotation, targetRotation):
-        while targetRotation < centerRotation - 180:
-            targetRotation += 360
-        while targetRotation > centerRotation + 180:
-            targetRotation -= 360
-        return targetRotation
         
     def draw(self, surface):
         self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
