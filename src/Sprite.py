@@ -5,9 +5,7 @@ Created on Aug 31, 2018
 '''
 
 class Sprite(object):
-    frameCount = 1
-    animationSpeed = 15
-    frameList = []
+
 
     def __init__(self, spriteSheet, frameCount=1, animationSpeed=15):
         self.frameCount = frameCount
@@ -15,6 +13,9 @@ class Sprite(object):
         size = spriteSheet.get_size()
         frameHeight = size[1]
         frameWidth = size[0] / frameCount
+        self.frameCount = 1
+        self.animationSpeed = 15
+        self.frameList = []
 
         for frame in range(frameCount):
             x = frameWidth * frame

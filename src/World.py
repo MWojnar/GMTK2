@@ -5,8 +5,8 @@ Created on Aug 31, 2018
 '''
 
 import pygame
-import Entity
-import Sprite
+from Player import Player
+from Sprite import Sprite
 
 class World(object):
     clock = pygame.time.Clock()
@@ -17,9 +17,8 @@ class World(object):
 
     def __init__(self, mainSurface):
         self.mainSurface = mainSurface
-        image = Sprite.Sprite(pygame.image.load("WalkingManSpriteSheet-2400px-1024x157.png"), 8)
-        entity = Entity.Entity(self, image, 100, 100)
-        self.addEntity(entity)
+        player = Player(self, 100, 100)
+        self.addEntity(player)
 
     def run(self):
         while self.running:
