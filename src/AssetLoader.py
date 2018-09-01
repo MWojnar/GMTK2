@@ -17,6 +17,7 @@ class AssetLoader(object):
         self.pullTether = Sprite(world, pygame.image.load("spr_attract_tether_3frames.png"), 3)
         
         self.bgEarth = Sprite(world, pygame.image.load("bg_earth.png"), 1)
+        self.bgSpace = pygame.image.load("bg_space.png")
         
         self.satellitePlatform = Sprite(world, pygame.image.load("ts_satellite_platform.png"), 1)
         

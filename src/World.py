@@ -2,6 +2,7 @@ import pygame
 from Player import Player
 from AssetLoader import AssetLoader
 from PullOrb import PullOrb
+from Background import Background
 
 class World(object):
     clock = pygame.time.Clock()
@@ -15,7 +16,8 @@ class World(object):
     def __init__(self, mainSurface):
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
-        player = Player(self, 100, 100)
+        self.background = Background()
+        player = Player(self, 0, 0)
         self.addEntity(player)
 
     def run(self):
@@ -33,6 +35,7 @@ class World(object):
     
     def render(self):
         self.mainSurface.fill((255, 255, 255))
+        self.background.draw(self.mainSurface, self.assetLoader.bgSpace)
         for entity in self.entityList:
             entity.draw(self.mainSurface)
         pygame.display.flip()
