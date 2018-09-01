@@ -3,7 +3,7 @@ import pygame
 
 pygame.init()
 pygame.display.set_caption("test")
-windowSize = (500, 500)
+windowSize = (960, 540)
 screen = pygame.display.set_mode(windowSize)
 world = World(screen)
 world.run()
