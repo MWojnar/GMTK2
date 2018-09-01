@@ -1,13 +1,8 @@
 class Entity(object):
-    sprite = None
-    animationSpeedTimer = 0
-    frame = 0
-    world = None
-    x = 0
-    y = 0
-    depth = 0
-
-    def __init__(self, world=None, sprite=None, x=0, y=0, depth=0):
+    def __init__(self, world=None, x=0, y=0, sprite=None, depth=0):
+        self.frame = 0
+        self.world = None
+        self.animationSpeedTimer = 0
         self.world = world
         self.sprite = sprite
         self.x = x

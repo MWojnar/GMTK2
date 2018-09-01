@@ -2,13 +2,6 @@ import pygame
 import math
 
 class Sprite(object):
-    frameCount = 1
-    animationSpeed = 15
-    frameList = []
-    width = 0
-    height = 0
-    world = None
-
     def __init__(self, world, spriteSheet, frameCount=1, animationSpeed=15):
         self.world = world
         self.frameCount = frameCount
@@ -16,6 +9,9 @@ class Sprite(object):
         size = spriteSheet.get_size()
         self.height = size[1]
         self.width = size[0] / frameCount
+        self.frameCount = 1
+        self.animationSpeed = 15
+        self.frameList = []
 
         for frame in range(frameCount):
             x = self.width * frame
