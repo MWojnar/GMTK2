@@ -1,6 +1,7 @@
 import pygame
 from Player import Player
-from Sprite import Sprite
+from AssetLoader import AssetLoader
+from PullOrb import PullOrb
 
 class World(object):
     clock = pygame.time.Clock()
@@ -9,8 +10,10 @@ class World(object):
     running = True
     mainSurface = None
     camPos = [0, 0]
+    
 
     def __init__(self, mainSurface):
+        self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         player = Player(self, 100, 100)
         self.addEntity(player)
