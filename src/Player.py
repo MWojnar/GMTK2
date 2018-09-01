@@ -31,8 +31,10 @@ class Player(Entity):
         self.crouching = False
         self.hSpeed = 0
         self.vSpeed = 0
-        self.jumpTimer = 0
-        self.jumpTimerMax = 10
+        self.maxSpeed = 5
+        self.pullSpeed = 0.1
+        self.float = False
+        self.floatRotation = 1
         
     def update(self):
         super().update()
@@ -43,6 +45,7 @@ class Player(Entity):
         if self.power > self.maxPower:
             self.power = self.maxPower
         if self.isStable:
+            self.float = False
             self.arrowRotation = math.degrees(math.atan2(self.world.mousePos[0] - self.x, self.world.mousePos[1] - self.y))
             self.arrowRotation = Utility.getRelativeRotation(self.stableRotation, self.arrowRotation)
             if self.arrowRotation > self.stableRotation + self.angleLimit:
@@ -60,17 +63,17 @@ class Player(Entity):
                     self.rotation = self.arrowRotation
                     self.hSpeed = Utility.lengthDirXDegrees(self.power / 2, self.rotation + 90)
                     self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
-                    self.jumpTimer = self.jumpTimerMax
                 else:
                     self.sprite = self.world.assetLoader.spaceguyStand
-        else:
-            self.jumpTimer -= 1
-            if self.jumpTimer < 0:
-                self.jumpTimer = 0
-                self.sprite = self.world.assetLoader.spaceguyFloat
+        if self.float:
+            self.rotation += self.floatRotation
         self.move()
         
     def move(self):
+        speed = Utility.getDistance((0, 0), (self.hSpeed, self.vSpeed))
+        if speed > self.maxSpeed:
+            self.hSpeed *= self.maxSpeed / speed
+            self.vSpeed *= self.maxSpeed / speed
         self.x += self.hSpeed
         self.y += self.vSpeed
         
@@ -90,3 +93,10 @@ class Player(Entity):
         x = self.x + Utility.lengthDirXDegrees(self.power * segLen + segLen / 2 + self.sprite.height / 4 + 2, self.arrowRotation + 90)
         y = self.y + Utility.lengthDirYDegrees(self.power * segLen + segLen / 2 + self.sprite.height / 4 + 2, self.arrowRotation + 90)
         arrowTip.draw(surface, x, y, 0, self.arrowRotation)
+        
+    def pull(self, pullPos):
+        angle = math.atan2(self.x - pullPos[0], self.y - pullPos[1]) + math.pi / 2
+        self.hSpeed += Utility.lengthDirX(self.pullSpeed, angle)
+        self.vSpeed += Utility.lengthDirY(self.pullSpeed, angle)
+        self.float = True
+        self.sprite = self.world.assetLoader.spaceguyFloat

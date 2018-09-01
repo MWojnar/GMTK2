@@ -20,6 +20,8 @@ class World(object):
         self.background = Background()
         player = Player(self, 200, 200)
         self.addEntity(player)
+        pullOrb = PullOrb(self, 250, 150, depth=-1, player=player)
+        self.addEntity(pullOrb)
         platform = Platform(self, 200, 225, depth=-1)
         platform.frame = 1
         self.addEntity(platform)

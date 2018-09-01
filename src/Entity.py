@@ -8,9 +8,11 @@ class Entity(object):
         self.y = y
         self.depth = depth
         self.rotation = 0
+        self.animating = True
         
     def update(self):
-        self.incrementFrame()
+        if self.animating:
+            self.incrementFrame()
     
     def draw(self, surface):
         self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
