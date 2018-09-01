@@ -2,6 +2,7 @@ import pygame
 from Player import Player
 from AssetLoader import AssetLoader
 from PullOrb import PullOrb
+from Platform import Platform
 from Background import Background
 
 class World(object):
@@ -17,8 +18,10 @@ class World(object):
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
-        player = Player(self, 0, 0)
+        player = Player(self, 200, 200)
         self.addEntity(player)
+        platform = Platform(self, 200, 215, depth=-1)
+        self.addEntity(platform)
 
     def run(self):
         while self.running:
@@ -30,6 +33,9 @@ class World(object):
             if event.type == pygame.QUIT:
                 self.running = False
         self.clock.tick(self.FPS)
+        self.buttonState = pygame.mouse.get_pressed()
+        pos = pygame.mouse.get_pos()
+        self.mousePos = (pos[0] + self.camPos[0], pos[1] + self.camPos[1])
         for entity in self.entityList:
             entity.update()
     
