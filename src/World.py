@@ -21,6 +21,7 @@ class World(object):
         player = Player(self, 200, 200)
         self.addEntity(player)
         platform = Platform(self, 200, 225, depth=-1)
+        platform.frame = 1
         self.addEntity(platform)
 
     def run(self):

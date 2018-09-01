@@ -19,7 +19,7 @@ class AssetLoader(object):
         self.bgEarth = Sprite(world, pygame.image.load("bg_earth.png"), 1)
         self.bgSpace = pygame.image.load("bg_space.png")
         
-        self.satellitePlatform = Sprite(world, pygame.image.load("ts_satellite_platform.png"), 1)
+        self.satellitePlatform = Sprite(world, pygame.image.load("ts_satellite_platform.png"), 10, 0)
         
         self.arrowSegment = Sprite(world, pygame.image.load("spr_arrow_segment.png"), 1)
         self.arrowTip = Sprite(world, pygame.image.load("spr_arrow_tip.png"), 1)
