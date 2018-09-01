@@ -7,12 +7,13 @@ class Entity(object):
         self.x = x
         self.y = y
         self.depth = depth
+        self.rotation = 0
         
     def update(self):
         self.incrementFrame()
     
     def draw(self, surface):
-        self.sprite.draw(surface, self.x, self.y, self.frame)
+        self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
         
     def incrementFrame(self):
         if self.sprite != None and self.sprite.animationSpeed != 0:

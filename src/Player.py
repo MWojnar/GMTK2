@@ -11,7 +11,7 @@ class Player(Entity):
     def __init__(self, world=None, x=0, y=0, sprite=None, depth=0):
         # Can't set the sprite as a default value, as I need before
         # I can access assetLoader
-        super().__init__(world, x, y, depth)
+        super().__init__(world, x, y, depth=depth)
         if sprite == None:
             self.sprite = world.assetLoader.spaceguyStand
         else:
@@ -22,7 +22,6 @@ class Player(Entity):
         self.x = x
         self.y = y
         self.depth = depth
-        self.rotation = 0
         self.isStable = True
         self.stableRotation = 0
         self.angleLimit = 60

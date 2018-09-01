@@ -9,8 +9,6 @@ class Sprite(object):
         size = spriteSheet.get_size()
         self.height = size[1]
         self.width = size[0] / frameCount
-        self.frameCount = 1
-        self.animationSpeed = 15
         self.frameList = []
 
         for frame in range(frameCount):
