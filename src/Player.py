@@ -6,13 +6,18 @@ Created on Aug 31, 2018
 import pygame
 import math
 from Entity import Entity
-from Sprite import Sprite
 
 class Player(Entity):
     def __init__(self, world=None, x=0, y=0, sprite=None, depth=0):
-        self.sprite = Sprite(world, pygame.image.load("spr_spaceguy.png"), 1)
-        self.frame = 0
+        # Can't set the sprite as a default value, as I need before
+        # I can access assetLoader
+        super().__init__(world, x, y, depth)
+        if sprite == None:
+            self.sprite = world.assetLoader.spaceguyStand
+        else:
+            self.sprite = sprite
         self.animationSpeedTimer = 0
+        self. frame = 0
         self.world = world
         self.x = x
         self.y = y
@@ -21,6 +26,7 @@ class Player(Entity):
         self.isStable = True
         self.stableRotation = 0
         self.angleLimit = 60
+        
         
     def update(self):
         super().update()
