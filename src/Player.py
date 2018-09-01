@@ -35,6 +35,7 @@ class Player(Entity):
         self.pullSpeed = 0.1
         self.float = False
         self.floatRotation = 1
+        self.circleMaskRadius = self.sprite.width / 4
         
     def update(self):
         super().update()

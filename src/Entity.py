@@ -50,7 +50,7 @@ class Entity(object):
             else:
                 rect = (entity.x + entity.rectMask[0], entity.y + entity.rectMask[1], entity.x + entity.rectMask[0] + entity.rectMask[2], entity.y + entity.rectMask[1] + entity.rectMask[3])
                 circle = ((self.x + self.circleMaskCenter[0], self.y + self.circleMaskCenter[1]), self.circleMaskRadius)
-            Utility.rectCircleColliding(rect, circle)
+            return Utility.rectCircleColliding(rect, circle)
     
     def animationEnd(self):
         pass
