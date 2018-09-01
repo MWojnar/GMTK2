@@ -33,15 +33,16 @@ class Player(Entity):
         pos = pygame.mouse.get_pos()
         truePos = (pos[0] + self.world.camPos[0], pos[1] + self.world.camPos[1])
         if self.isStable:
+            self.rotation = math.degrees(math.atan2(truePos[0] - self.x, truePos[1] - self.y))
+            self.rotation = self.getRelativeRotation(self.stableRotation, self.rotation)
+            if self.rotation > self.stableRotation + self.angleLimit:
+                self.rotation = self.stableRotation + self.angleLimit
+            if self.rotation < self.stableRotation - self.angleLimit:
+                self.rotation = self.stableRotation - self.angleLimit
             if buttonState[0]:
-                self.rotation = math.degrees(math.atan2(truePos[0] - self.x, truePos[1] - self.y))
-                self.rotation = self.getRelativeRotation(self.stableRotation, self.rotation)
-                if self.rotation > self.stableRotation + self.angleLimit:
-                    self.rotation = self.stableRotation + self.angleLimit
-                if self.rotation < self.stableRotation - self.angleLimit:
-                    self.rotation = self.stableRotation - self.angleLimit
+                self.sprite = self.world.assetLoader.spaceguyCrouch
             else:
-                self.rotation = self.stableRotation
+                self.sprite = self.world.assetLoader.spaceguyStand
                 
     def getRelativeRotation(self, centerRotation, targetRotation):
         while targetRotation < centerRotation - 180:

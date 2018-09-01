@@ -19,6 +19,15 @@ class Sprite(object):
         if angle == 0:
             surface.blit(self.frameList[frame], (x - self.width / 2 - self.world.camPos[0], y - self.height / 2 - self.world.camPos[1]))
         else:
-            tempSurface = pygame.transform.rotate(self.frameList[frame], angle)
+            """pygame.transform.rotate(self.frameList[frame], angle)"""
+            tempSurface = self.rot_center(self.frameList[frame], angle)
             tempSize = tempSurface.get_size()
             surface.blit(tempSurface, (x - tempSize[0] / 2 - self.world.camPos[0], y - tempSize[1] / 2 - self.world.camPos[1]))
+            
+    def rot_center(self, image, angle):
+        orig_rect = image.get_rect()
+        rot_image = pygame.transform.rotate(image, angle)
+        rot_rect = orig_rect.copy()
+        rot_rect.center = rot_image.get_rect().center
+        rot_image = rot_image.subsurface(rot_rect).copy()
+        return rot_image
