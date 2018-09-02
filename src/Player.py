@@ -41,26 +41,23 @@ class Player(Entity):
         self.checkpointData = (self.x, self.y, self.rotation)
         self.respawning = False
         self.visible = True
+        self.mouseOffset = [0, 0]
         
     def update(self):
         super().update()
         if not self.dying and not self.respawning:
-            dist = Utility.getDistance((self.x, self.y), self.world.mousePos)
-            self.power = dist // 25 + 1
-            if self.power < 1:
-                self.power = 1
-            if self.power > self.maxPower:
-                self.power = self.maxPower
             if self.isStable:
-                self.float = False
-                self.arrowRotation = math.degrees(math.atan2(self.world.mousePos[0] - self.x, self.world.mousePos[1] - self.y))
-                self.arrowRotation = Utility.getRelativeRotation(self.stableRotation, self.arrowRotation)
-                if self.arrowRotation > self.stableRotation + self.angleLimit:
-                    self.arrowRotation = self.stableRotation + self.angleLimit
-                if self.arrowRotation < self.stableRotation - self.angleLimit:
-                    self.arrowRotation = self.stableRotation - self.angleLimit
                 if self.world.buttonState[0]:
                     self.sprite = self.world.assetLoader.spaceguyCrouch
+                    if not self.crouching:
+                        pygame.mouse.set_visible(False)
+                        pygame.event.set_grab(True)
+                        pygame.mouse.get_rel()
+                        self.mouseOffset[0] = Utility.lengthDirXDegrees(5, self.stableRotation + 90)
+                        self.mouseOffset[1] = Utility.lengthDirYDegrees(5, self.stableRotation + 90)
+                    offset = pygame.mouse.get_rel()
+                    self.mouseOffset[0] += offset[0]
+                    self.mouseOffset[1] += offset[1]
                     self.crouching = True
                 else:
                     if self.crouching:
@@ -72,6 +69,32 @@ class Player(Entity):
                         self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
                     else:
                         self.sprite = self.world.assetLoader.spaceguyStand
+                    pygame.mouse.set_visible(True)
+                    pygame.event.set_grab(False)
+                self.float = False
+                dist = Utility.getDistance((0, 0), self.mouseOffset)
+                if dist > 255:
+                    self.mouseOffset[0] = self.mouseOffset[0] * 255 / dist
+                    self.mouseOffset[1] = self.mouseOffset[1] * 255 / dist
+                    dist = 255
+                self.arrowRotation = math.degrees(math.atan2(-self.mouseOffset[0], -self.mouseOffset[1]))
+                self.arrowRotation = Utility.getRelativeRotation(self.stableRotation, self.arrowRotation)
+                if self.arrowRotation > self.stableRotation + self.angleLimit:
+                    self.arrowRotation = self.stableRotation + self.angleLimit
+                    if dist != 0:
+                        self.mouseOffset[0] = Utility.lengthDirXDegrees(dist, self.arrowRotation + 90)
+                        self.mouseOffset[1] = Utility.lengthDirYDegrees(dist, self.arrowRotation + 90)
+                elif self.arrowRotation < self.stableRotation - self.angleLimit:
+                    self.arrowRotation = self.stableRotation - self.angleLimit
+                    if dist != 0:
+                        self.mouseOffset[0] = Utility.lengthDirXDegrees(dist, self.arrowRotation + 90)
+                        self.mouseOffset[1] = Utility.lengthDirYDegrees(dist, self.arrowRotation + 90)
+            dist = Utility.getDistance((0, 0), self.mouseOffset)
+            self.power = dist // 25 + 1
+            if self.power < 1:
+                self.power = 1
+            if self.power > self.maxPower:
+                self.power = self.maxPower
             if self.float:
                 self.rotation += self.floatRotation
             self.move()
