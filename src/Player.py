@@ -131,6 +131,9 @@ class Player(Entity):
         angle = math.atan2(self.x - pullPos[0], self.y - pullPos[1]) + math.pi / 2
         self.hSpeed += Utility.lengthDirX(self.pullSpeed, angle)
         self.vSpeed += Utility.lengthDirY(self.pullSpeed, angle)
+        self.startFloat()
+        
+    def startFloat(self):
         self.float = True
         self.sprite = self.world.assetLoader.spaceguyFloat
         
