@@ -49,18 +49,18 @@ class AssetLoader(object):
         self.arrowTip = Sprite(world, pygame.image.load("images\\spr_arrow_tip.png").convert_alpha(), 1)
         
         # UI sprites
-        self.mouse = pygame.image.load("images\\spr_mouse.png").convert_alpha() # FIXME: Implement
-        self.mouseCanClick = pygame.image.load("images\\spr_mouse_canclick.png").convert_alpha() # FIXME: Implement
+        self.mouse = Sprite(world, pygame.image.load("images\\spr_mouse.png").convert_alpha(), 1) # FIXME: Implement
+        self.mouseCanClick = Sprite(world, pygame.image.load("images\\spr_mouse_canclick.png").convert_alpha(), 1) # FIXME: Implement
         
-        self.start = pygame.image.load("images\\spr_start.png").convert_alpha() # FIXME: Implement
-        self.startSelected = pygame.image.load("images\\spr_start_selected.png").convert_alpha() # FIXME: Implement
+        self.start = Sprite(world, pygame.image.load("images\\spr_start.png").convert_alpha(), 1) # FIXME: Implement
+        self.startSelected = Sprite(world, pygame.image.load("images\\spr_start_selected.png").convert_alpha(), 1) # FIXME: Implement
         
-        self.quit = pygame.image.load("images\\spr_quit.png").convert_alpha() # FIXME: Implement
-        self.quitSelected = pygame.image.load("images\\spr_quit_selected.png").convert_alpha() # FIXME: Implement
+        self.quit = Sprite(world, pygame.image.load("images\\spr_quit.png").convert_alpha(), 1) # FIXME: Implement
+        self.quitSelected = Sprite(world, pygame.image.load("images\\spr_quit_selected.png").convert_alpha(), 1) # FIXME: Implement
         
-        self.title = pygame.image.load("images\\spr_title.png").convert_alpha() # FIXME: Implement
+        self.title = Sprite(world, pygame.image.load("images\\spr_title.png").convert_alpha(), 1) # FIXME: Implement
         
-        self.victory = pygame.image.load("images\\spr_victory.png").convert_alpha() # FIXME: Implement
+        self.victory = Sprite(world, pygame.image.load("images\\spr_victory.png").convert_alpha(), 1) # FIXME: Implement
         
         # Main theme song
         self.sndMainTheme = pygame.mixer.music.load("sounds\\SpaceSong_Loop.mp3")
