@@ -1,7 +1,7 @@
 from Entity import Entity
 
 class Checkpoint(Entity):
-        def __init__(self, world=None, x=0, y=0, sprite=None, depth=0, player=None):
+        def __init__(self, world=None, x=0, y=0, sprite=None, depth=-1, player=None):
             super().__init__(world, x, y, depth=depth)
             if sprite == None:
                 self.sprite = world.assetLoader.checkpoint

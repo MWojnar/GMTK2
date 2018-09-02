@@ -1,18 +1,16 @@
+from Entity import Entity
 import Utility
 import math
-from Entity import Entity
-
-class PullOrbTether(Entity):
-    
-    def __init__(self, world=None, x=0, y=0, sprite=None, depth=-2, player=None, pullOrb=None):
+class RepelOrbTether(Entity):
+    def __init__(self, world=None, x=0, y=0, sprite=None, depth=-2, player=None, repelOrb = None):
         super().__init__(world, x, y, depth=depth)
         if sprite == None:
-            self.sprite = world.assetLoader.pullTether
+            self.sprite = world.assetLoader.repelTether
         else:
             self.sprite = sprite
         self.visible = False
         self.player = player
-        self.repelOrb = pullOrb
+        self.repelOrb = repelOrb
         self.scale = 1
         
     def update(self):

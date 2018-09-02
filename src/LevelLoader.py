@@ -9,6 +9,7 @@ from PullOrbTether import PullOrbTether
 from Rocket import Rocket
 from Bouncy import Bouncy
 from Player import Player
+from RepelOrb import RepelOrb
 
 class LevelLoader():
     def __init__(self, world, fileName):
@@ -69,7 +70,6 @@ class LevelLoader():
                         
                     elif instance[item] == "Pull Orb":
                         
-                        pass
                         pullOrb = PullOrb(self.world, x, y, player=player)
                         self.levelObjects.append(pullOrb)
                               
@@ -92,6 +92,11 @@ class LevelLoader():
                         bouncy = Bouncy(self.world, x, y, player=player)
                         self.levelObjects.append(bouncy)
                     
+                    elif instance[item] == "Repel Orb":
+                        
+                        repelOrb = RepelOrb(self.world, x, y, player=player)
+                        self.levelObjects.append(repelOrb)
+                        
         return self.levelObjects
                 
         

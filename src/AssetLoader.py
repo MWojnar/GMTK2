@@ -19,6 +19,9 @@ class AssetLoader(object):
         self.pullTether = Sprite(world, pygame.image.load("images\\spr_attract_tether_3frames.png"), 3)
         self.pullRange = Sprite(world, pygame.image.load("images\\spr_attract_range.png"), 1)
         
+        self.repelOrb = Sprite(world, pygame.image.load("images\\spr_repel_4frames.png"), 4)
+        self.repelTether = Sprite(world, pygame.image.load("images\\spr_repel_tether_3frames.png"), 3)
+        
         self.bgEarth = Sprite(world, pygame.image.load("images\\bg_earth.png"), 1)
         self.bgSpace = pygame.image.load("images\\bg_space.png")
         

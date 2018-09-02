@@ -4,7 +4,7 @@ import Utility
 import pygame
 
 class PullOrb(Entity):
-    def __init__(self, world=None, x=0, y=0, sprite=None, depth=0, player=None):
+    def __init__(self, world=None, x=0, y=0, sprite=None, depth=-2, player=None):
         super().__init__(world, x, y, depth=depth)
         if sprite == None:
             self.sprite = world.assetLoader.pullOrb
@@ -14,7 +14,6 @@ class PullOrb(Entity):
         self.animating = False
         self.range = 256
         self.circleMaskRadius = 32
-        self.colliding = False
         self.pullOrbTether = PullOrbTether(world, pullOrb=self, player=player, depth=depth-1)
         world.addEntity(self.pullOrbTether)
         
@@ -28,7 +27,6 @@ class PullOrb(Entity):
             self.animating = False
             self.frame = 0
             self.pullOrbTether.visible = False
-        self.colliding = self.isColliding(self.player)
             
     def draw(self, surface):
         super().draw(surface)
