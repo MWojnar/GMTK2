@@ -11,7 +11,6 @@ class RepelOrb(Entity):
         else:
             self.sprite = sprite
         self.player = player
-        self.animating = False
         self.range = 256
         self.circleMaskRadius = 32
         self.repelOrbTether = RepelOrbTether(world, repelOrb=self, player=player, depth=depth-1)
@@ -21,16 +20,10 @@ class RepelOrb(Entity):
         super().update()
         if self.withinRange() and self.mouseOver() and self.world.buttonState[0] and not self.player.isStable:
             self.player.push((self.x, self.y))
-            self.animating = True
             self.repelOrbTether.visible = True
             self.world.assetLoader.sndRepelOrb.play()
         else:
-            self.animating = False
-            self.frame = 0
             self.repelOrbTether.visible = False
-            
-    def draw(self, surface):
-        super().draw(surface)
             
     def withinRange(self):
         dist = Utility.getDistance((self.x, self.y), (self.player.x, self.player.y))

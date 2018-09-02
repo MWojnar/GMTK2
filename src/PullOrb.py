@@ -11,7 +11,6 @@ class PullOrb(Entity):
         else:
             self.sprite = sprite
         self.player = player
-        self.animating = False
         self.range = 256
         self.circleMaskRadius = 32
         self.pullOrbTether = PullOrbTether(world, pullOrb=self, player=player, depth=depth-1)
@@ -21,16 +20,10 @@ class PullOrb(Entity):
         super().update()
         if self.withinRange() and self.mouseOver() and self.world.buttonState[0] and not self.player.isStable:
             self.player.pull((self.x, self.y))
-            self.animating = True
             self.pullOrbTether.visible = True
             self.world.assetLoader.sndPullOrb.play()
         else:
-            self.animating = False
-            self.frame = 0
             self.pullOrbTether.visible = False
-            
-    def draw(self, surface):
-        super().draw(surface)
             
     def withinRange(self):
         dist = Utility.getDistance((self.x, self.y), (self.player.x, self.player.y))
