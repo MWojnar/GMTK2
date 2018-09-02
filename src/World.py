@@ -4,6 +4,7 @@ from AssetLoader import AssetLoader
 from PullOrb import PullOrb
 from Platform import Platform
 from Background import Background
+from LevelLoader import LevelLoader
 
 class World(object):
     clock = pygame.time.Clock()
@@ -15,6 +16,9 @@ class World(object):
     
 
     def __init__(self, mainSurface):
+        self.roomWidth = 960
+        self.roomHeight = 540
+        levelTest = LevelLoader(self, "FinalTest2.txt")
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
@@ -25,6 +29,8 @@ class World(object):
         platform = Platform(self, 200, 225, depth=-1)
         platform.frame = 1
         self.addEntity(platform)
+        for object in levelTest.loadLevel():
+            self.addEntity(object)
 
     def run(self):
         while self.running:
