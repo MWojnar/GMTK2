@@ -11,7 +11,7 @@ class RepelOrb(Entity):
         else:
             self.sprite = sprite
         self.player = player
-        self.range = 256
+        self.range = 175
         self.circleMaskRadius = 32
         self.repelOrbTether = RepelOrbTether(world, repelOrb=self, player=player, depth=depth-1)
         world.addEntity(self.repelOrbTether)

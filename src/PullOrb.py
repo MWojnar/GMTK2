@@ -11,7 +11,7 @@ class PullOrb(Entity):
         else:
             self.sprite = sprite
         self.player = player
-        self.range = 256
+        self.range = 175
         self.circleMaskRadius = 32
         self.pullOrbTether = PullOrbTether(world, pullOrb=self, player=player, depth=depth-1)
         world.addEntity(self.pullOrbTether)
