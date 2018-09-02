@@ -42,9 +42,13 @@ class Player(Entity):
         self.respawning = False
         self.visible = True
         self.mouseOffset = [0, 0]
+        self.inWindow = True
         
     def update(self):
         super().update()
+        if not(self.x > -self.sprite.height and self.x < self.world.roomWidth + self.sprite.height and self.y > -self.sprite.height and self.y < self.world.roomHeight + self.sprite.height):
+            self.die()
+        
         if not self.dying and not self.respawning:
             if self.isStable:
                 if self.world.buttonState[0] and (not self.lastLeftDown or self.crouching):
