@@ -45,6 +45,6 @@ class Sprite(object):
         if (size[0] == size[1]):
             return surface
         newSize = max(size[0], size[1])
-        tempSurface = Surface((newSize, newSize))
+        tempSurface = Surface((newSize, newSize), pygame.SRCALPHA)
         tempSurface.blit(surface, (newSize / 2 - size[0] / 2, newSize / 2 - size[1] / 2))
         return tempSurface
