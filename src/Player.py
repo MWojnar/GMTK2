@@ -9,7 +9,7 @@ import Utility
 from Entity import Entity
 
 class Player(Entity):
-    def __init__(self, world=None, x=0, y=0, sprite=None, depth=0):
+    def __init__(self, world=None, x=0, y=0, sprite=None, depth=0, cursor=None):
         # Can't set the sprite as a default value, as I need before
         # I can access assetLoader
         super().__init__(world, x, y, depth=depth)
@@ -43,6 +43,7 @@ class Player(Entity):
         self.visible = True
         self.mouseOffset = [0, 0]
         self.createdHelmet = False
+        self.cursor = cursor
         
     def update(self):
         if self.animating:
@@ -55,7 +56,7 @@ class Player(Entity):
                 if self.world.buttonState[0] and (not self.lastLeftDown or self.crouching):
                     self.sprite = self.world.assetLoader.spaceguyCrouch
                     if not self.crouching:
-                        pygame.mouse.set_visible(False)
+                        self.cursor.visible = False
                         pygame.event.set_grab(True)
                         pygame.mouse.get_rel()
                         self.mouseOffset[0] = Utility.lengthDirXDegrees(5, self.stableRotation + 90)
@@ -65,7 +66,7 @@ class Player(Entity):
                     self.mouseOffset[1] += offset[1]
                     self.crouching = True
                 else:
-                    pygame.mouse.set_visible(True)
+                    self.cursor.visible = True
                     pygame.event.set_grab(False)
                     if self.crouching:
                         self.crouching = False
@@ -75,7 +76,7 @@ class Player(Entity):
                         self.hSpeed = Utility.lengthDirXDegrees(self.power / 2, self.rotation + 90)
                         self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
                         self.world.assetLoader.sndJump.play()
-                        pygame.mouse.set_pos((int(self.x + self.mouseOffset[0] / 2), int(self.y + self.mouseOffset[1] / 2)))
+                        self.world.updateMousePos((int(self.x + self.mouseOffset[0] / 2), int(self.y + self.mouseOffset[1] / 2)))
                     else:
                         self.sprite = self.world.assetLoader.spaceguyStand
                 self.float = False
@@ -144,16 +145,18 @@ class Player(Entity):
         arrowTip.draw(surface, x, y, 0, self.arrowRotation)
         
     def pull(self, pullPos):
-        angle = math.atan2(self.x - pullPos[0], self.y - pullPos[1]) + math.pi / 2
-        self.hSpeed += Utility.lengthDirX(self.pullSpeed, angle)
-        self.vSpeed += Utility.lengthDirY(self.pullSpeed, angle)
-        self.startFloat()
+        if not self.dying and not self.respawning:
+            angle = math.atan2(self.x - pullPos[0], self.y - pullPos[1]) + math.pi / 2
+            self.hSpeed += Utility.lengthDirX(self.pullSpeed, angle)
+            self.vSpeed += Utility.lengthDirY(self.pullSpeed, angle)
+            self.startFloat()
         
     def push(self, pullPos):
-        angle = math.atan2(self.x - pullPos[0], self.y - pullPos[1]) + math.pi / 2
-        self.hSpeed -= Utility.lengthDirX(self.pullSpeed, angle)
-        self.vSpeed -= Utility.lengthDirY(self.pullSpeed, angle)
-        self.startFloat()
+        if not self.dying and not self.respawning:
+            angle = math.atan2(self.x - pullPos[0], self.y - pullPos[1]) + math.pi / 2
+            self.hSpeed -= Utility.lengthDirX(self.pullSpeed, angle)
+            self.vSpeed -= Utility.lengthDirY(self.pullSpeed, angle)
+            self.startFloat()
         
     def startFloat(self):
         self.float = True

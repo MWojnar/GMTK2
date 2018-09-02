@@ -12,12 +12,13 @@ from Player import Player
 from RepelOrb import RepelOrb
 
 class LevelLoader():
-    def __init__(self, world, fileName):
+    def __init__(self, world, fileName, cursor=None):
         self.world = world
         self.fileName = fileName
         self.levelObjects = []
         self.roomWidth = 960
         self.roomHeight = 540
+        self.cursor = cursor
         
     def loadLevel(self):
         levelFile = open(self.fileName, "r")
@@ -31,7 +32,7 @@ class LevelLoader():
                     y = instance["Y"]
                     x = instance["X"]
                     angle = instance["Angle"]
-                    player = Player(self.world, x, y)
+                    player = Player(self.world, x, y, cursor=self.cursor)
                     player.rotation = angle
                     player.stableRotation = angle
                     self.world.addEntity(player)
@@ -71,7 +72,7 @@ class LevelLoader():
                     elif instance[item] == "Pull Orb":
                         
                         pass
-                        pullOrb = PullOrb(self.world, x, y, player=player)
+                        pullOrb = PullOrb(self.world, x, y, player=player, cursor=self.cursor)
                         self.levelObjects.append(pullOrb)
                               
                     elif instance[item] == "Attract Tether":
@@ -95,7 +96,7 @@ class LevelLoader():
                     
                     elif instance[item] == "Repel Orb":
                         
-                        repelOrb = RepelOrb(self.world, x, y, player=player)
+                        repelOrb = RepelOrb(self.world, x, y, player=player, cursor=self.cursor)
                         self.levelObjects.append(repelOrb)
                         
         return self.levelObjects

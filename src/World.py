@@ -7,6 +7,7 @@ from Background import Background
 from LevelLoader import LevelLoader
 from Button import Button
 from Victory import Victory
+from Cursor import Cursor
 
 class World(object):
     clock = pygame.time.Clock()
@@ -25,6 +26,7 @@ class World(object):
         self.mainSurface = mainSurface
         self.background = Background()
         self.level = 1
+        self.cursor = Cursor(self)
         self.loadMenu()
         self.events = []
         pygame.mixer.music.play(-1)
@@ -34,7 +36,9 @@ class World(object):
         
     def loadLevel(self, name):
         self.entityList.clear()
-        levelTest = LevelLoader(self, name)
+        self.addEntity(self.cursor)
+        self.cursor.visible = True
+        levelTest = LevelLoader(self, name, self.cursor)
         for object in levelTest.loadLevel():
             self.addEntity(object)
             
@@ -47,12 +51,14 @@ class World(object):
             
     def loadMenu(self):
         self.entityList.clear()
+        self.addEntity(self.cursor)
+        self.cursor.visible = True
         self.level = 1
         title = Entity(self, self.screenWidth / 2, self.screenHeight / 4 + 20, self.assetLoader.title)
         self.addEntity(title)
-        startButton = Button(self, self.screenWidth / 2, self.screenHeight / 2 + 48, self.assetLoader.start, self.assetLoader.startSelected, self.start)
+        startButton = Button(self, self.screenWidth / 2, self.screenHeight / 2 + 48, self.assetLoader.start, self.assetLoader.startSelected, self.start, self.cursor)
         self.addEntity(startButton)
-        quitButton = Button(self, self.screenWidth / 2, self.screenHeight * 3 / 4, self.assetLoader.quit, self.assetLoader.quitSelected, exit)
+        quitButton = Button(self, self.screenWidth / 2, self.screenHeight * 3 / 4, self.assetLoader.quit, self.assetLoader.quitSelected, exit, self.cursor)
         self.addEntity(quitButton)
         
     def start(self):
@@ -61,6 +67,8 @@ class World(object):
         
     def loadVictory(self):
         self.entityList.clear()
+        self.addEntity(self.cursor)
+        self.cursor.visible = True
         victory = Victory(self, self.screenWidth / 2, self.screenHeight / 2, self.assetLoader.victory)
         self.addEntity(victory)
         
@@ -105,3 +113,7 @@ class World(object):
             self.entityList.remove(entity)
         except:
             print("Error, trying to remove entity that does not exist!")
+            
+    def updateMousePos(self, pos):
+        pygame.mouse.set_pos(pos)
+        self.mousePos = pos
