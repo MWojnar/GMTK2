@@ -21,3 +21,22 @@ def lengthDirXDegrees(distance, angle):
 
 def lengthDirYDegrees(distance, angle):
     return lengthDirY(distance, math.radians(angle))
+
+def rectsColliding(rect1, rect2):
+    return (rect1[0] <= rect2[2] and rect1[2] >= rect2[0] and rect1[1] <= rect2[3] and rect1[3] >= rect2[1])
+
+def rectCircleColliding(rect, circle):
+    rectWidth = rect[2] - rect[0]
+    rectHeight = rect[3] - rect[1]
+    circleDistance = (abs(circle[0][0] - (rect[0] + rect[2]) / 2),
+                      abs(circle[0][1] - (rect[1] + rect[3]) / 2))
+    
+    if circleDistance[0] > rectWidth / 2 + circle[1] or circleDistance[1] > rectHeight / 2 + circle[1]:
+        return False
+    
+    if circleDistance[0] <= rectWidth / 2 or circleDistance[1] <= rectHeight / 2:
+        return True
+    
+    cornerDistanceSQ = math.pow(circleDistance[0] - rectWidth / 2, 2) + math.pow(circleDistance[1] - rectHeight / 2, 2)
+    
+    return (cornerDistanceSQ <= math.pow(circle[1], 2))
