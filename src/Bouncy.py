@@ -1,11 +1,10 @@
 from Entity import Entity
 
 class Bouncy(Entity):
-        def __init__(self, world=None, x=0, y=0, sprite=None, depth=0):
+        def __init__(self, world=None, x=0, y=0, sprite=None, depth=0, player=None):
             super().__init__(world, x, y, depth=depth)
             if sprite == None:
                 self.sprite = world.assetLoader.bouncy
             else:
                 self.sprite = sprite
-            self.animationSpeedTimer = 0
-            self.frame = 0
+            self.player = player

@@ -8,6 +8,7 @@ from PullOrb import PullOrb
 from PullOrbTether import PullOrbTether
 from Rocket import Rocket
 from Bouncy import Bouncy
+from Player import Player
 
 class LevelLoader():
     def __init__(self, world, fileName):
@@ -21,7 +22,18 @@ class LevelLoader():
         levelFile = open(self.fileName, "r")
         jsonString = levelFile.read()
         parsedJson = json.loads(jsonString)
-        
+
+        player = None
+        for instance in parsedJson["Level"]:
+            for item in instance:
+                if item == "Name" and instance[item] == "Player":
+                    y = instance["Y"]
+                    x = instance["X"]
+                    angle = instance["Angle"]
+                    player = Player(self.world, x, y)
+                    player.rotation = angle
+                    player.stableRotation = angle
+                    self.world.addEntity(player)
         for instance in parsedJson["Level"]:
             for item in instance:
                 if item == "Room":
@@ -35,35 +47,41 @@ class LevelLoader():
                     if instance[item] == "Satellite Platform":
                         imageIndex = instance["Image Index"]
                         
-                        platform = Platform(self.world, x, y)
+                        platform = Platform(self.world, x, y, player=player)
+                        platform.frame = imageIndex
                         self.levelObjects.append(platform)
                         
                     elif instance[item] == "Spikes":
                         imageIndex = instance["Image Index"]
                         
-                        spike = Spike(self.world, x, y)
+                        sprite = None
+                        if imageIndex == 0:
+                            sprite = self.world.assetLoader.smallSpikes
+                        elif imageIndex == 2:
+                            sprite = self.world.assetLoader.bigSpikes
+                        spike = Spike(self.world, x, y, sprite=sprite, player=player)
                         self.levelObjects.append(spike)
                         
                     elif instance[item] == "Checkpoint":
                         
-                        checkpoint = Checkpoint(self.world, x, y)
+                        checkpoint = Checkpoint(self.world, x, y, player=player)
                         self.levelObjects.append(checkpoint)
                         
                     elif instance[item] == "Pull Orb":
                         
                         pass
-                        #pullOrb = PullOrb(self.world, x, y)
-                        #self.levelObjects.append(pullOrb) FIXME: Needs player to function?
+                        pullOrb = PullOrb(self.world, x, y, player=player)
+                        self.levelObjects.append(pullOrb)
                               
                     elif instance[item] == "Attract Tether":
                         
                         pass
-                        #pullOrbTether = PullOrbTether(self.world, x, y)
-                        #self.levelObjects.append(pullOrbTether) FIXME: Same as above
+                        pullOrbTether = PullOrbTether(self.world, x, y, player=player)
+                        self.levelObjects.append(pullOrbTether)
                               
                     elif instance[item] == "End Rocket":
                         
-                        rocket = Rocket(self.world, x, y)
+                        rocket = Rocket(self.world, x, y, player=player)
                         self.levelObjects.append(rocket)
                               
                     elif instance[item] == "Earth":
@@ -71,11 +89,8 @@ class LevelLoader():
                               
                     elif instance[item] == "Bouncy":
                         
-                        bouncy = Bouncy(self.world, x, y)
+                        bouncy = Bouncy(self.world, x, y, player=player)
                         self.levelObjects.append(bouncy)
-                              
-                    else:
-                        pass
                     
         return self.levelObjects
                 
