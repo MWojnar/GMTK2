@@ -47,7 +47,7 @@ class Player(Entity):
         super().update()
         if not self.dying and not self.respawning:
             if self.isStable:
-                if self.world.buttonState[0]:
+                if self.world.buttonState[0] and (not self.lastLeftDown or self.crouching):
                     self.sprite = self.world.assetLoader.spaceguyCrouch
                     if not self.crouching:
                         pygame.mouse.set_visible(False)
@@ -101,6 +101,7 @@ class Player(Entity):
             self.move()
         #elif self.frame == 3:
             #create dead head
+        self.lastLeftDown = self.world.buttonState[0]
         
     def move(self):
         speed = Utility.getDistance((0, 0), (self.hSpeed, self.vSpeed))
@@ -114,7 +115,7 @@ class Player(Entity):
     def draw(self, surface):
         if self.visible:
             self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
-            if not self.dying and not self.respawning and self.isStable and self.world.buttonState[0]:
+            if not self.dying and not self.respawning and self.isStable and self.world.buttonState[0] and self.crouching:
                 self.drawArrow(surface)
             
     def drawArrow(self, surface):
