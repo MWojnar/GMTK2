@@ -18,12 +18,24 @@ class World(object):
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
-        player = Player(self, 200, 200)
+        player = Player(self, 200, 300)
         self.addEntity(player)
         pullOrb = PullOrb(self, 250, 150, depth=-1, player=player)
         self.addEntity(pullOrb)
-        platform = Platform(self, 200, 225, depth=-1)
+        platform = Platform(self, 200, 325, depth=-1, player=player)
         platform.frame = 1
+        self.addEntity(platform)
+        platform = Platform(self, 300, 225, depth=-1, player=player)
+        platform.frame = 6
+        self.addEntity(platform)
+        platform = Platform(self, 300, 225 - 16, depth=-1, player=player)
+        platform.frame = 6
+        self.addEntity(platform)
+        platform = Platform(self, 300, 225 - 32, depth=-1, player=player)
+        platform.frame = 6
+        self.addEntity(platform)
+        platform = Platform(self, 300, 225 - 48, depth=-1, player=player)
+        platform.frame = 6
         self.addEntity(platform)
 
     def run(self):

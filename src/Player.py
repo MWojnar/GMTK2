@@ -101,3 +101,13 @@ class Player(Entity):
         self.vSpeed += Utility.lengthDirY(self.pullSpeed, angle)
         self.float = True
         self.sprite = self.world.assetLoader.spaceguyFloat
+        
+    def stabilize(self, pos, angle):
+        self.x = pos[0]
+        self.y = pos[1]
+        self.rotation = angle
+        self.stableRotation = angle
+        self.sprite = self.world.assetLoader.spaceguyStand
+        self.isStable = True
+        self.vSpeed = 0
+        self.hSpeed = 0
