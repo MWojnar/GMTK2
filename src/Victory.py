@@ -7,10 +7,18 @@ class Victory(Entity):
             self.sprite = self.world.assetLoader.victory
         else:
             self.sprite = sprite
+        self.scale = 0
+        self.scaleChange = 0.02
         self.lastButtonState = False
             
     def update(self):
         super().update()
+        self.scale += self.scaleChange
+        if (self.scale > 1):
+            self.scale = 1
         if not self.world.buttonState[0] and self.lastButtonState:
             self.world.loadMenu()
         self.lastButtonState = self.world.buttonState[0]
+        
+    def draw(self, surface):
+        self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation, self.sprite.width * self.scale, self.sprite.height * self.scale)

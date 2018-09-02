@@ -11,8 +11,6 @@ class Sprite(object):
         self.height = size[1]
         self.width = size[0] / frameCount
         self.frameList = []
-        self.hScale = -1
-        self.vScale = -1
 
         for frame in range(frameCount):
             x = self.width * frame
@@ -20,14 +18,17 @@ class Sprite(object):
 
     def draw(self, surface, x, y, frame, angle=0, hScale = -1, vScale = -1):
         tempSurface = self.frameList[frame]
-        if self.hScale != -1 or self.vScale != -1:
-            if self.hScale == -1:
-                self.hScale = self.width
+        if hScale != -1 or vScale != -1:
+            if hScale == -1:
+                hScale = self.width
             if vScale == -1:
-                self.vScale = self.height
-            tempSurface = pygame.transform.scale(tempSurface, (int(self.hScale), int(self.vScale)))
+                vScale = self.height
+            tempSurface = pygame.transform.scale(tempSurface, (int(hScale), int(vScale)))
+        size = tempSurface.get_size()
+        width = size[0]
+        height = size[1]
         if angle == 0:
-            surface.blit(tempSurface, (x - self.width / 2 - self.world.camPos[0], y - self.height / 2 - self.world.camPos[1]))
+            surface.blit(tempSurface, (x - width / 2 - self.world.camPos[0], y - height / 2 - self.world.camPos[1]))
         else:
             tempSurface = self.squarify(tempSurface)
             tempSurface = self.rot_center(tempSurface, angle)
