@@ -29,6 +29,7 @@ class World(object):
         self.cursor = Cursor(self)
         self.loadMenu()
         self.events = []
+        self.fullscreen = False
         pygame.mixer.music.play(-1)
         
     def loadCurrentLevel(self):
@@ -86,6 +87,13 @@ class World(object):
         for event in self.events:
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_F4:
+                if self.fullscreen:
+                    self.mainSurface = pygame.display.set_mode((960, 540))
+                    self.fullscreen = False
+                else:
+                    self.mainSurface = pygame.display.set_mode((960, 540), pygame.FULLSCREEN)
+                    self.fullscreen = True
         self.clock.tick(self.FPS)
         self.buttonState = pygame.mouse.get_pressed()
         pos = pygame.mouse.get_pos()
