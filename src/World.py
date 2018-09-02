@@ -1,5 +1,6 @@
 import pygame
 import os.path
+from sys import exit
 from Entity import Entity
 from AssetLoader import AssetLoader
 from Background import Background
