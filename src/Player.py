@@ -63,6 +63,8 @@ class Player(Entity):
                     self.mouseOffset[1] += offset[1]
                     self.crouching = True
                 else:
+                    pygame.mouse.set_visible(True)
+                    pygame.event.set_grab(False)
                     if self.crouching:
                         self.crouching = False
                         self.isStable = False
@@ -71,10 +73,9 @@ class Player(Entity):
                         self.hSpeed = Utility.lengthDirXDegrees(self.power / 2, self.rotation + 90)
                         self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
                         self.world.assetLoader.sndJump.play()
+                        pygame.mouse.set_pos((int(self.x + self.mouseOffset[0] / 2), int(self.y + self.mouseOffset[1] / 2)))
                     else:
                         self.sprite = self.world.assetLoader.spaceguyStand
-                    pygame.mouse.set_visible(True)
-                    pygame.event.set_grab(False)
                 self.float = False
                 dist = Utility.getDistance((0, 0), self.mouseOffset)
                 if dist > 255:
@@ -102,6 +103,10 @@ class Player(Entity):
             if self.float:
                 self.rotation += self.floatRotation
             self.move()
+            for event in self.world.events:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    self.die()
+                
         #elif self.frame == 3:
             #create dead head
         self.lastLeftDown = self.world.buttonState[0]

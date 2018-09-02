@@ -1,4 +1,5 @@
 from Entity import Entity
+import random
 
 class Spike(Entity):
     def __init__(self, world=None, x=0, y=0, sprite=None, depth=-1, player=None):
@@ -12,8 +13,10 @@ class Spike(Entity):
         self.player = player
         self.circleMaskCenter = (0, 0)
         self.circleMaskRadius = self.sprite.width / 2 - 3
+        self.rotationSpeed = random.random() - 0.5
         
     def update(self):
         super().update()
         if self.isColliding(self.player):
             self.player.die()
+        self.rotation += self.rotationSpeed

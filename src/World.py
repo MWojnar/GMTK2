@@ -1,5 +1,6 @@
 import pygame
 import os.path
+from sys import exit
 from Entity import Entity
 from AssetLoader import AssetLoader
 from Background import Background
@@ -25,6 +26,7 @@ class World(object):
         self.background = Background()
         self.level = 1
         self.loadMenu()
+        self.events = []
         pygame.mixer.music.play(-1)
         
     def loadCurrentLevel(self):
@@ -68,8 +70,9 @@ class World(object):
             self.render()
             
     def update(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        self.events = pygame.event.get()
+        for event in self.events:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.running = False
         self.clock.tick(self.FPS)
         self.buttonState = pygame.mouse.get_pressed()
