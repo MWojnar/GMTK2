@@ -21,12 +21,13 @@ class World(object):
     def __init__(self, mainSurface):
         self.roomWidth = 960
         self.roomHeight = 540
-        levelTest = LevelLoader(self, "TestLevel.txt")
+        levelTest = LevelLoader(self, "TempLevel.txt")
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
         for object in levelTest.loadLevel():
             self.addEntity(object)
+        pygame.mixer.music.play(-1)
 
     def run(self):
         while self.running:
