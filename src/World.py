@@ -1,9 +1,6 @@
 import pygame
-<<<<<<< HEAD
-=======
 import os.path
 from Player import Player
->>>>>>> d84fd5fc55f2ef21040272f86b4574c5274e8dbb
 from AssetLoader import AssetLoader
 from Background import Background
 from LevelLoader import LevelLoader
@@ -20,10 +17,6 @@ class World(object):
     def __init__(self, mainSurface):
         self.roomWidth = 960
         self.roomHeight = 540
-<<<<<<< HEAD
-        levelTest = LevelLoader(self, "Level1.txt")
-=======
->>>>>>> d84fd5fc55f2ef21040272f86b4574c5274e8dbb
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
