@@ -15,6 +15,8 @@ class PullOrb(Entity):
         self.circleMaskRadius = 32
         self.pullOrbTether = PullOrbTether(world, pullOrb=self, player=player, depth=depth-1)
         world.addEntity(self.pullOrbTether)
+        pullOrbRange = Entity(world, x, y, self.world.assetLoader.pullRange, depth-2)
+        world.addEntity(pullOrbRange)
         
     def update(self):
         super().update()

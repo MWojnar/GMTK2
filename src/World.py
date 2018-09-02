@@ -1,4 +1,9 @@
 import pygame
+<<<<<<< HEAD
+=======
+import os.path
+from Player import Player
+>>>>>>> d84fd5fc55f2ef21040272f86b4574c5274e8dbb
 from AssetLoader import AssetLoader
 from Background import Background
 from LevelLoader import LevelLoader
@@ -15,13 +20,41 @@ class World(object):
     def __init__(self, mainSurface):
         self.roomWidth = 960
         self.roomHeight = 540
+<<<<<<< HEAD
         levelTest = LevelLoader(self, "Level1.txt")
+=======
+>>>>>>> d84fd5fc55f2ef21040272f86b4574c5274e8dbb
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
+        self.level = 1
+        self.loadCurrentLevel()
+        pygame.mixer.music.play(-1)
+        
+    def loadCurrentLevel(self):
+        self.loadLevel("Level" + str(self.level) + ".txt")
+        
+    def loadLevel(self, name):
+        self.entityList.clear()
+        levelTest = LevelLoader(self, name)
         for object in levelTest.loadLevel():
             self.addEntity(object)
-        pygame.mixer.music.play(-1)
+            
+    def nextLevel(self):
+        self.level += 1
+        if (os.path.isfile("Level" + str(self.level) + ".txt")):
+            self.loadCurrentLevel()
+        else:
+            self.loadVictory()
+            
+    def loadMenu(self):
+        self.entityList.clear()
+        self.level = 1
+        #To be implemented
+        
+    def loadVictory(self):
+        self.entityList.clear()
+        #To be implemented
 
     def run(self):
         while self.running:

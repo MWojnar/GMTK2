@@ -15,6 +15,8 @@ class RepelOrb(Entity):
         self.circleMaskRadius = 32
         self.repelOrbTether = RepelOrbTether(world, repelOrb=self, player=player, depth=depth-1)
         world.addEntity(self.repelOrbTether)
+        repelOrbRange = Entity(world, x, y, self.world.assetLoader.repelRange, depth-2)
+        world.addEntity(repelOrbRange)
         
     def update(self):
         super().update()
