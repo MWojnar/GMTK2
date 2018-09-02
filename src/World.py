@@ -92,7 +92,7 @@ class World(object):
     def addEntity(self, entity):
         found = False
         for i in range(len(self.entityList)):
-            if entity.depth <= self.entityList[i].depth:
+            if entity.depth < self.entityList[i].depth:
                 self.entityList.insert(i, entity)
                 found = True
                 break

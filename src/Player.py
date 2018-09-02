@@ -42,9 +42,11 @@ class Player(Entity):
         self.respawning = False
         self.visible = True
         self.mouseOffset = [0, 0]
+        self.createdHelmet = False
         
     def update(self):
-        super().update()
+        if self.animating:
+            self.incrementFrame()
         if not(self.x > -self.sprite.height and self.x < self.world.roomWidth + self.sprite.height and self.y > -self.sprite.height and self.y < self.world.roomHeight + self.sprite.height):
             self.die()
         
@@ -110,6 +112,9 @@ class Player(Entity):
         #elif self.frame == 3:
             #create dead head
         self.lastLeftDown = self.world.buttonState[0]
+        if self.dying and self.frame == 3 and not self.createdHelmet:
+            self.createHelmet()
+            self.createdHelmet = True
 
     def move(self):
         speed = Utility.getDistance((0, 0), (self.hSpeed, self.vSpeed))
@@ -191,6 +196,7 @@ class Player(Entity):
             self.vSpeed = 0
             self.hSpeed = 0
             self.isStable = True
+            self.createdHelmet = False
             if self.checkpoint != None:
                 self.checkpoint.untrigger()
                 self.checkpoint = None
@@ -200,3 +206,13 @@ class Player(Entity):
             
     def hitCheckpoint(self, checkpoint):
         self.checkpoint = checkpoint
+        
+    def createHelmet(self):
+        angle = self.rotation + 90
+        helmet = Entity(self.world, self.x + Utility.lengthDirXDegrees(self.sprite.height / 4, angle), self.y + Utility.lengthDirYDegrees(self.sprite.height / 4, angle), 
+                        self.world.assetLoader.spaceguyDieHead, 0)
+        helmet.hSpeed = Utility.lengthDirXDegrees(1, angle)
+        helmet.vSpeed = Utility.lengthDirYDegrees(1, angle)
+        helmet.rotationSpeed = 1
+        helmet.rotation = self.rotation
+        self.world.addEntity(helmet)

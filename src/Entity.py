@@ -7,6 +7,9 @@ class Entity(object):
         self.sprite = sprite
         self.x = x
         self.y = y
+        self.vSpeed = 0
+        self.hSpeed = 0
+        self.rotationSpeed = 0
         self.depth = depth
         self.rotation = 0
         self.animating = True
@@ -18,6 +21,7 @@ class Entity(object):
     def update(self):
         if self.animating:
             self.incrementFrame()
+        self.move()
     
     def draw(self, surface):
         self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
@@ -54,3 +58,8 @@ class Entity(object):
     
     def animationEnd(self):
         pass
+    
+    def move(self):
+        self.x += self.hSpeed
+        self.y += self.vSpeed
+        self.rotation += self.rotationSpeed

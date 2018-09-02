@@ -19,4 +19,3 @@ class Spike(Entity):
         super().update()
         if self.isColliding(self.player):
             self.player.die()
-        self.rotation += self.rotationSpeed
