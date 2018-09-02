@@ -21,7 +21,7 @@ class World(object):
     def __init__(self, mainSurface):
         self.roomWidth = 960
         self.roomHeight = 540
-        levelTest = LevelLoader(self, "TempLevel.txt")
+        levelTest = LevelLoader(self, "TestLevel.txt")
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()

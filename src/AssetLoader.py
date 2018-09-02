@@ -71,8 +71,8 @@ class AssetLoader(object):
         self.sndLand = pygame.mixer.Sound("sounds\\snd_land.wav")
         
         self.sndPullOrb = pygame.mixer.Sound("sounds\\snd_attract.wav")
-        self.sndBouncy = pygame.mixer.Sound("sounds\\snd_bouncy.wav") # FIXME: Implement
-        self.sndRepelOrb = pygame.mixer.Sound("sounds\\snd_repel.wav") # FIXME: Implement
+        self.sndBouncy = pygame.mixer.Sound("sounds\\snd_bouncy.wav")
+        self.sndRepelOrb = pygame.mixer.Sound("sounds\\snd_repel.wav")
         self.sndRocket = pygame.mixer.Sound("sounds\\snd_rocket.wav")
         
         # Menu sounds

@@ -70,6 +70,7 @@ class LevelLoader():
                         
                     elif instance[item] == "Pull Orb":
                         
+                        pass
                         pullOrb = PullOrb(self.world, x, y, player=player)
                         self.levelObjects.append(pullOrb)
                               

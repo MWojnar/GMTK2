@@ -28,6 +28,8 @@ class Bouncy(Entity):
                         self.player.vSpeed = -abs(self.player.vSpeed)
                     else:
                         self.player.vSpeed = abs(self.player.vSpeed)
+                if not self.animating:
+                    self.world.assetLoader.sndBouncy.play()
                 self.animating = True
                 self.player.startFloat()
         

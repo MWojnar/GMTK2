@@ -23,6 +23,7 @@ class RepelOrb(Entity):
             self.player.push((self.x, self.y))
             self.animating = True
             self.repelOrbTether.visible = True
+            self.world.assetLoader.sndRepelOrb.play()
         else:
             self.animating = False
             self.frame = 0
