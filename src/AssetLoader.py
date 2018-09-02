@@ -9,6 +9,7 @@ class AssetLoader(object):
         self.spaceguyCrouch = Sprite(world, pygame.image.load("images\\spr_spaceguy_crouch.png"), 1)
         self.spaceguyDie = Sprite(world, pygame.image.load("images\\spr_spaceguy_die_8frames.png"), 8)
         self.spaceguyDieHead = Sprite(world, pygame.image.load("images\\spr_spaceguy_die_head.png"), 1)
+        self.spaceguyRespawn = Sprite(world, pygame.image.load("images\\spr_spaceguy_spawn_10frames.png"), 10)
         
         self.smallSpikes = Sprite(world, pygame.image.load("images\\spr_small_spikes.png"), 1)
         self.mediumSpikes = Sprite(world, pygame.image.load("images\\spr_medium_spikes.png"), 1)
@@ -27,7 +28,7 @@ class AssetLoader(object):
         
         self.checkpoint = Sprite(world, pygame.image.load("images\\spr_checkpoint_not_got.png"), 1)
         self.checkpointGet = Sprite(world, pygame.image.load("images\\spr_checkpoint_get_10frames.png"), 10)
-        self.checkpointGot = Sprite(world, pygame.image.load("images\\spr_checkpoint_6frames.png"), 1)
+        self.checkpointGot = Sprite(world, pygame.image.load("images\\spr_checkpoint_6frames.png"), 6)
         
         self.endRocket = Sprite(world, pygame.image.load("images\\spr_end_rocket.png"), 1)
         self.endRocketTakeoff = Sprite(world, pygame.image.load("images\\spr_end_rocket_exit_3frames.png"), 3)

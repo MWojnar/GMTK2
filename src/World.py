@@ -5,6 +5,7 @@ from PullOrb import PullOrb
 from Platform import Platform
 from Background import Background
 from Spike import Spike
+from Checkpoint import Checkpoint
 
 class World(object):
     clock = pygame.time.Clock()
@@ -40,6 +41,8 @@ class World(object):
         self.addEntity(platform)
         spike = Spike(self, 100, 225, depth=-1, player=player)
         self.addEntity(spike)
+        checkpoint = Checkpoint(self, 250, 225, depth=-1, player=player)
+        self.addEntity(checkpoint)
 
     def run(self):
         while self.running:

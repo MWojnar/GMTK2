@@ -37,10 +37,13 @@ class Player(Entity):
         self.floatRotation = 1
         self.circleMaskRadius = self.sprite.width / 4
         self.dying = False
+        self.checkpoint = None
+        self.checkpointData = (self.x, self.y, self.rotation)
+        self.respawning = False
         
     def update(self):
         super().update()
-        if not self.dying:
+        if not self.dying and not self.respawning:
             dist = Utility.getDistance((self.x, self.y), self.world.mousePos)
             self.power = dist // 25 + 1
             if self.power < 1:
@@ -84,7 +87,7 @@ class Player(Entity):
         
     def draw(self, surface):
         self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
-        if not self.dying and self.isStable and self.world.buttonState[0]:
+        if not self.dying and not self.respawning and self.isStable and self.world.buttonState[0]:
             self.drawArrow(surface)
             
     def drawArrow(self, surface):
@@ -115,6 +118,9 @@ class Player(Entity):
         self.isStable = True
         self.vSpeed = 0
         self.hSpeed = 0
+        if self.checkpoint != None:
+            self.checkpoint = None
+            self.checkpointData = (self.x, self.y, self.rotation)
         
     def die(self):
         if not self.dying:
@@ -124,5 +130,25 @@ class Player(Entity):
             self.hSpeed = 0
             
     def animationEnd(self):
+        super().animationEnd()
         if self.dying:
-            self.world.removeEntity(self)
+            self.x = self.checkpointData[0]
+            self.y = self.checkpointData[1]
+            self.rotation = self.checkpointData[2]
+            self.stableRotation = self.checkpointData[2]
+            self.sprite = self.world.assetLoader.spaceguyRespawn
+            self.frame = 0
+            self.respawning = True
+            self.dying = False
+            self.vSpeed = 0
+            self.hSpeed = 0
+            self.isStable = True
+            if self.checkpoint != None:
+                self.checkpoint.untrigger()
+                self.checkpoint = None
+        elif self.respawning:
+            self.respawning = False
+            self.sprite = self.world.assetLoader.spaceguyStand
+            
+    def hitCheckpoint(self, checkpoint):
+        self.checkpoint = checkpoint
