@@ -36,39 +36,43 @@ class Player(Entity):
         self.float = False
         self.floatRotation = 1
         self.circleMaskRadius = self.sprite.width / 4
+        self.dying = False
         
     def update(self):
         super().update()
-        dist = Utility.getDistance((self.x, self.y), self.world.mousePos)
-        self.power = dist // 25 + 1
-        if self.power < 1:
-            self.power = 1
-        if self.power > self.maxPower:
-            self.power = self.maxPower
-        if self.isStable:
-            self.float = False
-            self.arrowRotation = math.degrees(math.atan2(self.world.mousePos[0] - self.x, self.world.mousePos[1] - self.y))
-            self.arrowRotation = Utility.getRelativeRotation(self.stableRotation, self.arrowRotation)
-            if self.arrowRotation > self.stableRotation + self.angleLimit:
-                self.arrowRotation = self.stableRotation + self.angleLimit
-            if self.arrowRotation < self.stableRotation - self.angleLimit:
-                self.arrowRotation = self.stableRotation - self.angleLimit
-            if self.world.buttonState[0]:
-                self.sprite = self.world.assetLoader.spaceguyCrouch
-                self.crouching = True
-            else:
-                if self.crouching:
-                    self.crouching = False
-                    self.isStable = False
-                    self.sprite = self.world.assetLoader.spaceguyJump
-                    self.rotation = self.arrowRotation
-                    self.hSpeed = Utility.lengthDirXDegrees(self.power / 2, self.rotation + 90)
-                    self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
+        if not self.dying:
+            dist = Utility.getDistance((self.x, self.y), self.world.mousePos)
+            self.power = dist // 25 + 1
+            if self.power < 1:
+                self.power = 1
+            if self.power > self.maxPower:
+                self.power = self.maxPower
+            if self.isStable:
+                self.float = False
+                self.arrowRotation = math.degrees(math.atan2(self.world.mousePos[0] - self.x, self.world.mousePos[1] - self.y))
+                self.arrowRotation = Utility.getRelativeRotation(self.stableRotation, self.arrowRotation)
+                if self.arrowRotation > self.stableRotation + self.angleLimit:
+                    self.arrowRotation = self.stableRotation + self.angleLimit
+                if self.arrowRotation < self.stableRotation - self.angleLimit:
+                    self.arrowRotation = self.stableRotation - self.angleLimit
+                if self.world.buttonState[0]:
+                    self.sprite = self.world.assetLoader.spaceguyCrouch
+                    self.crouching = True
                 else:
-                    self.sprite = self.world.assetLoader.spaceguyStand
-        if self.float:
-            self.rotation += self.floatRotation
-        self.move()
+                    if self.crouching:
+                        self.crouching = False
+                        self.isStable = False
+                        self.sprite = self.world.assetLoader.spaceguyJump
+                        self.rotation = self.arrowRotation
+                        self.hSpeed = Utility.lengthDirXDegrees(self.power / 2, self.rotation + 90)
+                        self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
+                    else:
+                        self.sprite = self.world.assetLoader.spaceguyStand
+            if self.float:
+                self.rotation += self.floatRotation
+            self.move()
+        #elif self.frame == 3:
+            #create dead head
         
     def move(self):
         speed = Utility.getDistance((0, 0), (self.hSpeed, self.vSpeed))
@@ -80,7 +84,7 @@ class Player(Entity):
         
     def draw(self, surface):
         self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
-        if self.isStable and self.world.buttonState[0]:
+        if not self.dying and self.isStable and self.world.buttonState[0]:
             self.drawArrow(surface)
             
     def drawArrow(self, surface):
@@ -111,3 +115,14 @@ class Player(Entity):
         self.isStable = True
         self.vSpeed = 0
         self.hSpeed = 0
+        
+    def die(self):
+        if not self.dying:
+            self.dying = True
+            self.sprite = self.world.assetLoader.spaceguyDie
+            self.vSpeed = 0
+            self.hSpeed = 0
+            
+    def animationEnd(self):
+        if self.dying:
+            self.world.removeEntity(self)

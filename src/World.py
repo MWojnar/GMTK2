@@ -4,6 +4,7 @@ from AssetLoader import AssetLoader
 from PullOrb import PullOrb
 from Platform import Platform
 from Background import Background
+from Spike import Spike
 
 class World(object):
     clock = pygame.time.Clock()
@@ -37,6 +38,8 @@ class World(object):
         platform = Platform(self, 300, 225 - 48, depth=-1, player=player)
         platform.frame = 6
         self.addEntity(platform)
+        spike = Spike(self, 100, 225, depth=-1, player=player)
+        self.addEntity(spike)
 
     def run(self):
         while self.running:
