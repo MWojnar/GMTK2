@@ -12,15 +12,15 @@ class PullOrbTether(Entity):
             self.sprite = sprite
         self.visible = False
         self.player = player
-        self.repelOrb = pullOrb
+        self.pullOrb = pullOrb
         self.scale = 1
         
     def update(self):
         super().update()
-        self.x = (self.player.x + self.repelOrb.x) / 2
-        self.y = (self.player.y + self.repelOrb.y) / 2
-        self.scale = int(Utility.getDistance((self.player.x, self.player.y), (self.repelOrb.x, self.repelOrb.y)))
-        self.rotation = -math.degrees(math.atan2(self.player.y - self.repelOrb.y, self.player.x - self.repelOrb.x)) + 90
+        self.x = (self.player.x + self.pullOrb.x) / 2
+        self.y = (self.player.y + self.pullOrb.y) / 2
+        self.scale = int(Utility.getDistance((self.player.x, self.player.y), (self.pullOrb.x, self.pullOrb.y)))
+        self.rotation = -math.degrees(math.atan2(self.player.y - self.pullOrb.y, self.player.x - self.pullOrb.x)) + 90
         
     def draw(self, surface):
         if self.visible:
