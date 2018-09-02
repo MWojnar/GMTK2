@@ -25,4 +25,4 @@ class Rocket(Entity):
                 self.speed += self.acceleration
             self.y -= self.speed
             if self.y < -300:
-                exit()
+                self.world.nextLevel()
