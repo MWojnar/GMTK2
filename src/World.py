@@ -7,6 +7,7 @@ from Background import Background
 from Spike import Spike
 from Checkpoint import Checkpoint
 from Rocket import Rocket
+from LevelLoader import LevelLoader
 
 class World(object):
     clock = pygame.time.Clock()
@@ -18,34 +19,14 @@ class World(object):
     
 
     def __init__(self, mainSurface):
+        self.roomWidth = 960
+        self.roomHeight = 540
+        levelTest = LevelLoader(self, "TestLevel.txt")
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
-        player = Player(self, 200, 300)
-        self.addEntity(player)
-        pullOrb = PullOrb(self, 250, 150, depth=-1, player=player)
-        self.addEntity(pullOrb)
-        platform = Platform(self, 200, 325, depth=-1, player=player)
-        platform.frame = 1
-        self.addEntity(platform)
-        platform = Platform(self, 300, 225, depth=-1, player=player)
-        platform.frame = 6
-        self.addEntity(platform)
-        platform = Platform(self, 300, 225 - 16, depth=-1, player=player)
-        platform.frame = 6
-        self.addEntity(platform)
-        platform = Platform(self, 300, 225 - 32, depth=-1, player=player)
-        platform.frame = 6
-        self.addEntity(platform)
-        platform = Platform(self, 300, 225 - 48, depth=-1, player=player)
-        platform.frame = 6
-        self.addEntity(platform)
-        spike = Spike(self, 100, 225, depth=-1, player=player)
-        self.addEntity(spike)
-        checkpoint = Checkpoint(self, 250, 225, depth=-1, player=player)
-        self.addEntity(checkpoint)
-        rocket = Rocket(self, 200, 200, depth=-1, player=player)
-        self.addEntity(rocket)
+        for object in levelTest.loadLevel():
+            self.addEntity(object)
 
     def run(self):
         while self.running:
