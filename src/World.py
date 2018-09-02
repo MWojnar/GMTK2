@@ -5,6 +5,7 @@ from AssetLoader import AssetLoader
 from Background import Background
 from LevelLoader import LevelLoader
 from Button import Button
+from Victory import Victory
 
 class World(object):
     clock = pygame.time.Clock()
@@ -13,7 +14,6 @@ class World(object):
     running = True
     mainSurface = None
     camPos = [0, 0]
-    
 
     def __init__(self, mainSurface, width, height):
         self.roomWidth = width
@@ -59,8 +59,9 @@ class World(object):
         
     def loadVictory(self):
         self.entityList.clear()
-        #To be implemented
-
+        victory = Victory(self, self.screenWidth / 2, self.screenHeight / 2, self.assetLoader.victory)
+        self.addEntity(victory)
+        
     def run(self):
         while self.running:
             self.update()
