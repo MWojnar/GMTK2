@@ -23,6 +23,7 @@ class PullOrb(Entity):
             self.player.pull((self.x, self.y))
             self.animating = True
             self.pullOrbTether.visible = True
+            self.world.assetLoader.sndPullOrb.play()
         else:
             self.animating = False
             self.frame = 0

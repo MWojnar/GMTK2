@@ -20,6 +20,7 @@ class Rocket(Entity):
                 self.player.visible = False
                 self.player.vSpeed = 0
                 self.player.hSpeed = 0
+                self.world.assetLoader.sndRocket.play()
             if (self.sprite == self.world.assetLoader.endRocketTakeoff):
                 self.speed += self.acceleration
             self.y -= self.speed

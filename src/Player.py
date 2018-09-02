@@ -67,6 +67,7 @@ class Player(Entity):
                         self.rotation = self.arrowRotation
                         self.hSpeed = Utility.lengthDirXDegrees(self.power / 2, self.rotation + 90)
                         self.vSpeed = Utility.lengthDirYDegrees(self.power / 2, self.rotation + 90)
+                        self.world.assetLoader.sndJump.play()
                     else:
                         self.sprite = self.world.assetLoader.spaceguyStand
                     pygame.mouse.set_visible(True)
@@ -109,6 +110,7 @@ class Player(Entity):
         self.x += self.hSpeed
         self.y += self.vSpeed
         
+        
     def draw(self, surface):
         if self.visible:
             self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
@@ -143,6 +145,7 @@ class Player(Entity):
         self.float = True
         self.sprite = self.world.assetLoader.spaceguyFloat
         
+        
     def stabilize(self, pos, angle):
         self.x = pos[0]
         self.y = pos[1]
@@ -155,6 +158,7 @@ class Player(Entity):
         if self.checkpoint != None:
             self.checkpoint = None
             self.checkpointData = (self.x, self.y, self.rotation)
+        self.world.assetLoader.sndLand.play()
         
     def die(self):
         if not self.dying:
@@ -162,6 +166,7 @@ class Player(Entity):
             self.sprite = self.world.assetLoader.spaceguyDie
             self.vSpeed = 0
             self.hSpeed = 0
+            self.world.assetLoader.sndDie.play()
             
     def animationEnd(self):
         super().animationEnd()
