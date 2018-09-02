@@ -40,6 +40,7 @@ class Player(Entity):
         self.checkpoint = None
         self.checkpointData = (self.x, self.y, self.rotation)
         self.respawning = False
+        self.visible = True
         
     def update(self):
         super().update()
@@ -86,9 +87,10 @@ class Player(Entity):
         self.y += self.vSpeed
         
     def draw(self, surface):
-        self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
-        if not self.dying and not self.respawning and self.isStable and self.world.buttonState[0]:
-            self.drawArrow(surface)
+        if self.visible:
+            self.sprite.draw(surface, self.x, self.y, self.frame, self.rotation)
+            if not self.dying and not self.respawning and self.isStable and self.world.buttonState[0]:
+                self.drawArrow(surface)
             
     def drawArrow(self, surface):
         arrowSeg = self.world.assetLoader.arrowSegment
