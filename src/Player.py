@@ -103,6 +103,10 @@ class Player(Entity):
             if self.float:
                 self.rotation += self.floatRotation
             self.move()
+            for event in self.world.events:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    self.die()
+                
         #elif self.frame == 3:
             #create dead head
         self.lastLeftDown = self.world.buttonState[0]
