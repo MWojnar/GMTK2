@@ -21,7 +21,9 @@ class PullOrb(Entity):
         if self.withinRange() and self.mouseOver() and self.world.buttonState[0] and not self.player.isStable:
             self.player.pull((self.x, self.y))
             self.pullOrbTether.visible = True
-            self.world.assetLoader.sndPullOrb.play()
+            if not pygame.mixer.Channel(7).get_sound() == self.world.assetLoader.sndPullOrb:
+                pygame.mixer.Channel(7).play(self.world.assetLoader.sndPullOrb)
+                
         else:
             self.pullOrbTether.visible = False
             

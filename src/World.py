@@ -1,12 +1,6 @@
 import pygame
-from Player import Player
 from AssetLoader import AssetLoader
-from PullOrb import PullOrb
-from Platform import Platform
 from Background import Background
-from Spike import Spike
-from Checkpoint import Checkpoint
-from Rocket import Rocket
 from LevelLoader import LevelLoader
 
 class World(object):
@@ -21,7 +15,7 @@ class World(object):
     def __init__(self, mainSurface):
         self.roomWidth = 960
         self.roomHeight = 540
-        levelTest = LevelLoader(self, "TestLevel.txt")
+        levelTest = LevelLoader(self, "Level1.txt")
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()

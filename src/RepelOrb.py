@@ -21,7 +21,11 @@ class RepelOrb(Entity):
         if self.withinRange() and self.mouseOver() and self.world.buttonState[0] and not self.player.isStable:
             self.player.push((self.x, self.y))
             self.repelOrbTether.visible = True
-            self.world.assetLoader.sndRepelOrb.play()
+            
+            if not pygame.mixer.Channel(7).get_sound() == self.world.assetLoader.sndRepelOrb:
+                pygame.mixer.Channel(7).play(self.world.assetLoader.sndRepelOrb)
+                
+
         else:
             self.repelOrbTether.visible = False
             

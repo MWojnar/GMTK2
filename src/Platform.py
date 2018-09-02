@@ -15,29 +15,30 @@ class Platform(Entity):
         
     def update(self):
         super().update()
-        if not self.player.isStable and self.isColliding(self.player):
-            difference = (self.x - self.player.x, self.y - self.player.y)
-            if difference[0] > 0:
-                if abs(difference[1]) < difference[0]:
-                    self.stabilizePlayer(0)
-                elif difference[1] > 0:
-                    self.stabilizePlayer(1)
+        if not(self.frame == 0 or self.frame == 4 or self.frame == 5 or self.frame == 9):
+            if not self.player.isStable and self.isColliding(self.player):
+                difference = (self.x - self.player.x, self.y - self.player.y)
+                if difference[0] > 0:
+                    if abs(difference[1]) < difference[0]:
+                        self.stabilizePlayer(0)
+                    elif difference[1] > 0:
+                        self.stabilizePlayer(1)
+                    else:
+                        self.stabilizePlayer(3)
                 else:
-                    self.stabilizePlayer(3)
-            else:
-                if abs(difference[1]) < abs(difference[0]):
-                    self.stabilizePlayer(2)
-                elif difference[1] > 0:
-                    self.stabilizePlayer(1)
-                else:
-                    self.stabilizePlayer(3)
+                    if abs(difference[1]) < abs(difference[0]):
+                        self.stabilizePlayer(2)
+                    elif difference[1] > 0:
+                        self.stabilizePlayer(1)
+                    else:
+                        self.stabilizePlayer(3)
                     
     def stabilizePlayer(self, side):
-        if side == 0: #left
-            self.player.stabilize((self.x - self.sprite.width / 2 - self.player.circleMaskRadius, self.y), 90)
-        elif side == 1: #top
-            self.player.stabilize((self.x, self.y - self.sprite.height / 2 - self.player.circleMaskRadius), 0)
-        elif side == 2: #right
-            self.player.stabilize((self.x + self.sprite.width / 2 + self.player.circleMaskRadius, self.y), 270)
-        else: #bottom
-            self.player.stabilize((self.x, self.y + self.sprite.height / 2 + self.player.circleMaskRadius), 180)
+            if side == 0: #left
+                self.player.stabilize((self.x - self.sprite.width / 2 - self.player.circleMaskRadius, self.y), 90)
+            elif side == 1: #top
+                self.player.stabilize((self.x, self.y - self.sprite.height / 2 - self.player.circleMaskRadius), 0)
+            elif side == 2: #right
+                self.player.stabilize((self.x + self.sprite.width / 2 + self.player.circleMaskRadius, self.y), 270)
+            else: #bottom
+                self.player.stabilize((self.x, self.y + self.sprite.height / 2 + self.player.circleMaskRadius), 180)

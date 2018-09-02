@@ -42,7 +42,6 @@ class Player(Entity):
         self.respawning = False
         self.visible = True
         self.mouseOffset = [0, 0]
-        self.inWindow = True
         
     def update(self):
         super().update()
@@ -106,7 +105,7 @@ class Player(Entity):
         #elif self.frame == 3:
             #create dead head
         self.lastLeftDown = self.world.buttonState[0]
-        
+
     def move(self):
         speed = Utility.getDistance((0, 0), (self.hSpeed, self.vSpeed))
         if speed > self.maxSpeed:
