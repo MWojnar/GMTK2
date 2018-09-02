@@ -1,9 +1,10 @@
 import pygame
 import os.path
-from Player import Player
+from Entity import Entity
 from AssetLoader import AssetLoader
 from Background import Background
 from LevelLoader import LevelLoader
+from Button import Button
 
 class World(object):
     clock = pygame.time.Clock()
@@ -14,14 +15,16 @@ class World(object):
     camPos = [0, 0]
     
 
-    def __init__(self, mainSurface):
-        self.roomWidth = 960
-        self.roomHeight = 540
+    def __init__(self, mainSurface, width, height):
+        self.roomWidth = width
+        self.roomHeight = height
+        self.screenWidth = width
+        self.screenHeight = height
         self.assetLoader = AssetLoader(self)
         self.mainSurface = mainSurface
         self.background = Background()
         self.level = 1
-        self.loadCurrentLevel()
+        self.loadMenu()
         pygame.mixer.music.play(-1)
         
     def loadCurrentLevel(self):
@@ -43,7 +46,16 @@ class World(object):
     def loadMenu(self):
         self.entityList.clear()
         self.level = 1
-        #To be implemented
+        title = Entity(self, self.screenWidth / 2, self.screenHeight / 4 + 20, self.assetLoader.title)
+        self.addEntity(title)
+        startButton = Button(self, self.screenWidth / 2, self.screenHeight / 2 + 48, self.assetLoader.start, self.assetLoader.startSelected, self.start)
+        self.addEntity(startButton)
+        quitButton = Button(self, self.screenWidth / 2, self.screenHeight * 3 / 4, self.assetLoader.quit, self.assetLoader.quitSelected, exit)
+        self.addEntity(quitButton)
+        
+    def start(self):
+        self.level = 1
+        self.loadCurrentLevel()
         
     def loadVictory(self):
         self.entityList.clear()
