@@ -26,7 +26,7 @@ class AssetLoader(object):
         self.repelTether = Sprite(world, pygame.image.load("images\\spr_repel_tether_3frames.png").convert_alpha(), 3)
         self.repelRange = self.pullRange#Sprite(world, pygame.image.load("images\\spr_repel_range").convert_alpha(), 1)
         
-        self.bgEarth = Sprite(world, pygame.image.load("images\\bg_earth.png").convert_alpha(), 1)  # FIXME: Implement
+        self.bgEarth = Sprite(world, pygame.image.load("images\\bg_earth.png").convert_alpha(), 1)
         self.bgSpace = pygame.image.load("images\\bg_space.png").convert()
         
         # Platform sprites
@@ -49,18 +49,22 @@ class AssetLoader(object):
         self.arrowTip = Sprite(world, pygame.image.load("images\\spr_arrow_tip.png").convert_alpha(), 1)
         
         # UI sprites
-        self.mouse = Sprite(world, pygame.image.load("images\\spr_mouse.png").convert_alpha(), 1) # FIXME: Implement
-        self.mouseCanClick = Sprite(world, pygame.image.load("images\\spr_mouse_canclick.png").convert_alpha(), 1) # FIXME: Implement
+        self.mouse = Sprite(world, pygame.image.load("images\\spr_mouse.png").convert_alpha(), 1)
+        self.mouseCanClick = Sprite(world, pygame.image.load("images\\spr_mouse_canclick.png").convert_alpha(), 1)
         
-        self.start = Sprite(world, pygame.image.load("images\\spr_start.png").convert_alpha(), 1) # FIXME: Implement
-        self.startSelected = Sprite(world, pygame.image.load("images\\spr_start_selected.png").convert_alpha(), 1) # FIXME: Implement
+        self.start = Sprite(world, pygame.image.load("images\\spr_start.png").convert_alpha(), 1)
+        self.startSelected = Sprite(world, pygame.image.load("images\\spr_start_selected.png").convert_alpha(), 1)
         
-        self.quit = Sprite(world, pygame.image.load("images\\spr_quit.png").convert_alpha(), 1) # FIXME: Implement
-        self.quitSelected = Sprite(world, pygame.image.load("images\\spr_quit_selected.png").convert_alpha(), 1) # FIXME: Implement
+        self.quit = Sprite(world, pygame.image.load("images\\spr_quit.png").convert_alpha(), 1)
+        self.quitSelected = Sprite(world, pygame.image.load("images\\spr_quit_selected.png").convert_alpha(), 1)
         
-        self.title = Sprite(world, pygame.image.load("images\\spr_title.png").convert_alpha(), 1) # FIXME: Implement
+        self.title = Sprite(world, pygame.image.load("images\\spr_title.png").convert_alpha(), 1)
         
-        self.victory = Sprite(world, pygame.image.load("images\\spr_victory.png").convert_alpha(), 1) # FIXME: Implement
+        self.victory = Sprite(world, pygame.image.load("images\\spr_victory.png").convert_alpha(), 1)
+        
+        self.tutorial = Sprite(world, pygame.image.load("images\\spr_Instructions.png").convert_alpha(), 1)
+        
+        self.wojWorks = Sprite(world, pygame.image.load("images\\spr_WojWorks.png").convert_alpha(), 1)
         
         # Main theme song
         self.sndMainTheme = pygame.mixer.music.load("sounds\\SpaceSong_Loop.mp3")

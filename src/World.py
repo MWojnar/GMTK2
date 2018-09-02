@@ -54,7 +54,11 @@ class World(object):
         self.addEntity(self.cursor)
         self.cursor.visible = True
         self.level = 1
-        title = Entity(self, self.screenWidth / 2, self.screenHeight / 4 + 20, self.assetLoader.title)
+        tutorial = Entity(self, self.screenWidth / 2, self.screenHeight / 2, self.assetLoader.tutorial)
+        self.addEntity(tutorial)
+        wojWorks = Entity(self, self.screenWidth / 2, self.assetLoader.wojWorks.height / 2 - 20, self.assetLoader.wojWorks)
+        self.addEntity(wojWorks)
+        title = Entity(self, self.screenWidth / 2, self.screenHeight / 4 + 52, self.assetLoader.title)
         self.addEntity(title)
         startButton = Button(self, self.screenWidth / 2, self.screenHeight / 2 + 48, self.assetLoader.start, self.assetLoader.startSelected, self.start, self.cursor)
         self.addEntity(startButton)
