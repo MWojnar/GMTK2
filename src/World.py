@@ -84,6 +84,7 @@ class World(object):
     def render(self):
         self.mainSurface.fill((255, 255, 255))
         self.background.draw(self.mainSurface, self.assetLoader.bgSpace)
+        self.assetLoader.bgEarth.draw(self.mainSurface, self.roomWidth / 2, self.roomHeight / 2, 0)
         for entity in self.entityList:
             entity.draw(self.mainSurface)
         pygame.display.flip()
