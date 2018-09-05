@@ -66,6 +66,10 @@ class AssetLoader(object):
         
         self.wojWorks = Sprite(world, pygame.image.load("images\\spr_WojWorks.png").convert_alpha(), 1)
         
+        self.dribblePromo = Sprite(world, pygame.image.load("images\\spr_promo.png").convert_alpha(), 1)
+        self.dribblePromoSelected = Sprite(world, pygame.image.load("images\\spr_promo_selected.png").convert_alpha(), 1)
+
+        
         # Main theme song
         self.sndMainTheme = pygame.mixer.music.load("sounds\\SpaceSong_Loop.mp3")
         

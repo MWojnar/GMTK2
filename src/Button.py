@@ -5,7 +5,7 @@ def emptyFunc():
 
 class Button(Entity):
     def __init__(self, world=None, x=0, y=0, defaultSprite=None, hoverSprite=None, clickEvent=emptyFunc, cursor=None):
-        super().__init__(world, x, y)
+        super().__init__(world, x, y, depth=-5)
         self.sprite = defaultSprite
         self.defaultSprite = defaultSprite
         self.hoverSprite = hoverSprite
@@ -20,6 +20,7 @@ class Button(Entity):
             self.sprite = self.hoverSprite
             if not self.world.buttonState[0] and self.lastButtonState:
                 self.clickEvent()
+                self.world.alreadyClicked = True
         else:
             self.sprite = self.defaultSprite
         self.lastButtonState = self.world.buttonState[0]

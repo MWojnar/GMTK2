@@ -8,6 +8,7 @@ from LevelLoader import LevelLoader
 from Button import Button
 from Victory import Victory
 from Cursor import Cursor
+import webbrowser
 
 class World(object):
     clock = pygame.time.Clock()
@@ -30,6 +31,7 @@ class World(object):
         self.loadMenu()
         self.events = []
         self.fullscreen = False
+        self.alreadyClicked = False
         pygame.mixer.music.play(-1)
         
     def loadCurrentLevel(self):
@@ -77,6 +79,9 @@ class World(object):
         victory = Victory(self, self.screenWidth / 2, self.screenHeight / 2, self.assetLoader.victory)
         self.addEntity(victory)
         
+    def dribbleURL(self):
+        webbrowser.open("www.wojworks.com/dribble/")
+        
     def run(self):
         while self.running:
             self.update()
@@ -84,6 +89,7 @@ class World(object):
             
     def update(self):
         self.events = pygame.event.get()
+        self.alreadyClicked = False
         for event in self.events:
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.running = False
